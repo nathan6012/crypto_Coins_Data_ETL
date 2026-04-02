@@ -63,7 +63,7 @@ def load_task(clean):
 
 @flow(name="ETL_Crypto_Flow",
 on_failure=[slack_on_failure],
-on_success=[slack_on_success],
+on_completion=[slack_on_success],
 log_prints=True)
 def master_flow_etl():
    # Step 1: Extract
