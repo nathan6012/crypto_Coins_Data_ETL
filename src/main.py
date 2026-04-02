@@ -19,14 +19,15 @@ from models import CryptoCoins
 
 slack_webhook_block = SlackWebhook.load("prefect-alerts-system01")
 
-def slack_on_failure(flow, flow_run, state):
-    message = f":x: Flow `{flow_run.name}` failed!\nState: {state.message}"
-    slack_webhook_block.notify(message)
-
-
-def slack_on_success(flow, flow_run, state):
+def slack_on_completion(flow, flow_run, state: State):
+  if state.is_completed():  # succeeded
     message = f":white_check_mark: Flow `{flow_run.name}` completed successfully!"
-    slack_webhook_block.notify(message)
+  elif state.is_failed():  # failed
+    message = f":x: Flow `{flow_run.name}` failed! Reason: {state.message}"
+  else:
+    return  # ignore other states
+
+
 
 
 
@@ -62,8 +63,7 @@ def load_task(clean):
 # Main flow 
 
 @flow(name="ETL_Crypto_Flow",
-on_failure=[slack_on_failure],
-on_completion=[slack_on_success],
+on_completion=[slack_on_completion],
 log_prints=True)
 def master_flow_etl():
    # Step 1: Extract
@@ -88,8 +88,8 @@ if __name__=="__main__":
   master_flow_etl.from_source(
         source="https://github.com/nathan6012/crypto_Coins_Data_ETL.git",
         
-  entrypoint="main.py:master_flow_etl"           
-    ).deploy(
+  entrypoint="src/main.py:master_flow_etl"
+   ).deploy(
       name="etl_github-deployment",
       work_pool_name="My_etl_system",
       interval=timedelta(minutes=10)
