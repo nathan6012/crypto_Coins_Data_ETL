@@ -63,7 +63,8 @@ project/
 │   ├── transform_data.py
 │   ├── load_data.py
 │   └── models.py
-│
+│____tests
+
 ├── .env
 ├── .gitignore
 ├── requirements.txt
