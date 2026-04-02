@@ -92,7 +92,7 @@ if __name__=="__main__":
    ).deploy(
       name="etl_github-deployment",
       work_pool_name="My_etl_system",
-      interval=timedelta(minutes=10)
+      interval=timedelta(hours=24)
     )
 
 

@@ -3,7 +3,7 @@ pandas
 pydantic
 sqlalchemy
 httpx
-tenacity
+tenacity>=8.2.2
 aiolimiter
 python-dotenv
 pytest
