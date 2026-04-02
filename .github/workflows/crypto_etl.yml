@@ -34,5 +34,5 @@ jobs:
         run: python -m pytest tests/
 
       - name: Run ETL workflow
-        run: python src/main.py
+        run: python -m src.main
         
