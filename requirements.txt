@@ -1,0 +1,11 @@
+prefect
+pandas
+pydantic
+sqlalchemy
+httpx
+tenacity
+aiolimiter
+python-dotenv
+pytest
+pytest-asyncio
+respx
