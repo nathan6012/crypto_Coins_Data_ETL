@@ -63,7 +63,7 @@ project/
 │   ├── transform_data.py
 │   ├── load_data.py
 │   └── models.py
-│____tests
+│____tests/
 
 ├── .env
 ├── .gitignore
