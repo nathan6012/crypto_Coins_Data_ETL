@@ -7,26 +7,44 @@ from prefect.blocks.notifications import SlackWebhook
 from prefect.states import State
 
 import asyncio
-from extract_data import extract_api_data
-from save_raw_data import save_raw_data
-from validate_data import validate
+
 from transform_data import transform_data
 from load_data import load_data_to_db
+from  validate_data import validate
+from extract_data import extract_api_data
+from save_raw_data import save_raw_data
 from models import CryptoCoins
 
 
 
 
-slack_webhook_block = SlackWebhook.load("prefect-alerts-system01")
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+
+
+def load_slack_block():
+  try:
+    return SlackWebhook.load("prefect-alerts-system01")
+  except Exception as e:
+    print(f"Slack block not available: {e}")
+    return None
+
 
 def slack_on_completion(flow, flow_run, state: State):
-  if state.is_completed():  # succeeded
-    message = f":white_check_mark: Flow `{flow_run.name}` completed successfully!"
-  elif state.is_failed():  # failed
-    message = f":x: Flow `{flow_run.name}` failed! Reason: {state.message}"
-  else:
-    return  # ignore other states
+  slack_webhook_block = load_slack_block()
 
+  if not slack_webhook_block:
+    print("Slack notification skipped.")
+    return
+
+  message = f":white_check_mark: Flow `{flow_run.name}` completed successfully!"
+
+  try:
+    slack_webhook_block.notify(message)
+  except Exception as e:
+    print(f"Failed to send Slack success message: {e}")
 
 
 
@@ -91,7 +109,7 @@ if __name__=="__main__":
    ).deploy(
       name="etl_github-deployment",
       work_pool_name="My_etl_system",
-      interval=timedelta(minutes=5)
+      interval=timedelta(hours=2)
     )
 
 

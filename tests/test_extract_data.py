@@ -1,41 +1,30 @@
 import pytest
+from src.extract_data import extract_api_data
 import respx
 import httpx
-import os 
-#from prefect.testing.utilities import prefect_test_harness
-from src.extract_data import extract_api_data 
+from unittest.mock import AsyncMock, patch
 
-# 1. Setup the Prefect Test Harness as a fixture
-# This ensures every test runs in an isolated temporary environment
-@pytest.fixture(autouse=True, scope="session")
-def prefect_test_fixture():
-  os.environ["PREFECT_URL"] = ""
-  yield
 
-# 2. Define the Test Case
 
 @pytest.mark.asyncio
 @respx.mock
 async def test_extract_api_data_success():
-  """Test that extract_api_data correctly fetches and returns mocked data"""
-    
-    # Arrange: Setup the mock response for the specific CoinGecko URL
-  mock_url = "https://api.coingecko.com/api/v3/coins/markets"
-  mock_data = [
-        {"id": "bitcoin", "symbol": "btc", "current_price": 50000},
-        {"id": "ethereum", "symbol": "eth", "current_price": 3000}
-    ]
-  
-  respx.get(mock_url, params={"vs_currency": "usd"}).respond(json=mock_data)
+    # Match the URL exactly as your code builds it
+  respx.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd").mock(
+        return_value=httpx.Response(200, json=[{"id": "bitcoin"}])
+    )
 
-
-    # Act: Call your function
   result = await extract_api_data()
+    
+  assert result == [{"id": "bitcoin"}]
 
-    # Assert: Verify the result matches our mock data
-  assert isinstance(result, list)
-  assert len(result) == 2
-  assert result[0]["id"] == "bitcoin"
-  assert len(respx.calls) == 1
+@pytest.mark.asyncio
+@respx.mock
+async def test_extract_api_data_error():
+    # Use a regex or prefix to match the URL regardless of params for the error test
+  respx.get(url__startswith="https://api.coingecko.com/api/v3/coins/markets").mock(
+        return_value=httpx.Response(500)
+    )
 
- # Verifies the API was actually hit
+  with pytest.raises(httpx.HTTPStatusError):
+    await extract_api_data()

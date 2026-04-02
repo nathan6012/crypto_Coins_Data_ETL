@@ -9,6 +9,13 @@ from sqlalchemy import(Table,Column,Integer,String,MetaData,ForeignKey,Index)
 from pathlib import Path
 from sqlalchemy import DateTime
 
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+
+
+
 
 dir_url = Path(__file__).resolve().parent
 root_dir = dir_url.parent

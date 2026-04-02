@@ -2,6 +2,11 @@ import pandas as pd
 import json 
 from pandas import json_normalize
 
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+
 
 
 def transform_data(good,bad):
