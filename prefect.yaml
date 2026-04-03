@@ -6,7 +6,7 @@ work_pool_name: My_etl_system
 
 pull:
   - prefect.deployments.steps.git_clone:
-      repository: https://github.com
+      repository: https://github.com/nathan6012/crypto_Coins_Data_ETL.git
 
 deployments:
   - name: crypto-managed-run
