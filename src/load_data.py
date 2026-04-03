@@ -21,7 +21,7 @@ load_dotenv()
 
 async def load_data_to_db(records):  
   
-  db_url = os.getenv("DATABASE_URL")
+  db_url = os.getenv("DATABASE_URL").strip()
   #Engine
   engine = create_async_engine(db_url,echo=False)#echo=True)
   #MetaData 
