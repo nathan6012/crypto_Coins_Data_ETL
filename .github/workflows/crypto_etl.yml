@@ -1,29 +1,37 @@
-name: Crypto ETL pipeline
-
+name: crypto ETL pipeline
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
-
+  workflow_dispatch: {}
+  schedule:
+    - cron: "0 5 * * *"
 jobs:
   run-etl:
     runs-on: ubuntu-latest
     environment: Env
+    permissions:
+      contents: read
+      
     env:
       PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/src
-      PREFECT_API_URL: ${{ vars.PREFECT_URL }}
-      PREFECT_API_KEY: ${{ secrets.PREFECT_KEY }}
-      API_KEY: ${{ secrets.API_KEY }}
-    
+      GECKO_API_KEY: ${{ secrets.GECKO_API_KEY }}
+      NEON_POSTGRES: ${{ secrets.NEON_POSTGRES }}
+      SLACK_WEB_HOOK_URL: ${{ secrets.SLACK_WEB_HOOK_URL }}
+      
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+          
+      - name: cache pip 
+        uses: actions/cache@v3
+        with: 
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
 
       - name: Install dependencies
         run: |
@@ -35,4 +43,21 @@ jobs:
 
       - name: Run ETL workflow
         run: python -m src.main
+        
+      - name: Slack Notification Success
+        if: ${{ success() }}
+        uses: rtCamp/action-slack-notify@v2
+        with:
+          webhook_url: ${{ secrets.SLACK_WEB_HOOK_URL }}
+          message: "Crypto ETL workflow completed successfully!"
+          status: Success
+      - name: Slack Notification failure
+        if: ${{ failure() }}
+        uses: rtCamp/action-slack-notify@v2
+        with:
+          webhook_url: ${{ secrets.SLACK_WEB_HOOK_URL }}
+          message: "Crypto Etl Workflow failed"
+          status: failure
+          
+ 
         
