@@ -1,7 +1,6 @@
 name: crypto ETL pipeline
 on:
   push:
-      
     branches:
       - main
   workflow_dispatch: {}
@@ -15,7 +14,6 @@ jobs:
       PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/src
       GECKO_API_KEY: ${{ secrets.GECKO_API_KEY }}
       NEON_POSTGRES: ${{ secrets.NEON_POSTGRES }}
-
 
     steps:
       - name: Checkout repository
