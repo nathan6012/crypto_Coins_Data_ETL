@@ -1,5 +1,4 @@
 name: crypto ETL pipeline
-
 on:
   push:
       
@@ -12,14 +11,11 @@ jobs:
   run-etl:
     runs-on: ubuntu-latest
     environment: Env
-    permissions:
-      contents: read
-      
     env:
       PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/src
       GECKO_API_KEY: ${{ secrets.GECKO_API_KEY }}
       NEON_POSTGRES: ${{ secrets.NEON_POSTGRES }}
-      SLACK_WEB_HOOK_URL: ${{ secrets.SLACK_WEB_HOOK_URL }}
+
 
     steps:
       - name: Checkout repository
@@ -47,19 +43,21 @@ jobs:
         run: python -m src.main
         
       - name: Slack Notification Success
-        if: ${{ success() }}
+        if: success()
         uses: rtCamp/action-slack-notify@v2
-        with:
-          webhook_url: ${{ secrets.SLACK_WEB_HOOK_URL }}
-          message: "Crypto ETL workflow completed successfully!"
-          status: Success
+        env:
+          SLACK_WEBHOOK : ${{ secrets.SLACK_WEB_HOOK_URL }}
+          
+          SLACK_MESSAGE: "Crypto ETL workflow completed successfully!"
+
+          
       - name: Slack Notification failure
-        if: ${{ failure() }}
+        if: failure() 
         uses: rtCamp/action-slack-notify@v2
-        with:
-          webhook_url: ${{ secrets.SLACK_WEB_HOOK_URL }}
-          message: "Crypto Etl Workflow failed"
-          status: failure
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEB_HOOK_URL }}
+          SLACK_MESSAGE: "Crypto Etl Workflow failed"
+          
           
  
         
