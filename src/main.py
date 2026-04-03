@@ -109,6 +109,13 @@ if __name__=="__main__":
    ).deploy(
       name="etl_github-deployment",
       work_pool_name="My_etl_system",
+      job_variables = { "pip_packages":[
+        "pandas","httpx","python-dotenv",
+        "pydantic",
+        "sqlalchemy",
+        "aiolimiter" ]
+        
+      },
       interval=timedelta(hours=2)
     )
 
