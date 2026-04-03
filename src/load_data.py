@@ -135,11 +135,16 @@ def load_data_to_db(records): # change to add data
       
       
   with engine.connect() as conn:
-    stmt = (select(crypto_markets.c.ath))
+    stmt = (select(crypto_markets.c.name))
     query = conn.execute(stmt)
     for row in query:
       print(row)
-    
+      
+ # with engine.connect() as conn:
+  #  stmt = (select(crypto_markets.c.id))
+   # query = conn.execute(stmt)
+  #  for row in query:
+   #   print(row)  
     
     
     
