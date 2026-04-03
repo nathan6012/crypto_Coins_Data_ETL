@@ -22,11 +22,12 @@ def transform_data(good,bad):
   pd.set_option("display.max_rows", None)
   df.style.set_properties(**{"text-align": "center"})
   
-  df["data.last_updated"] = pd.to_datetime(df["data.last_updated"], errors="coerce",format="mixed")
   
-  df["data.atl_date"] = pd.to_datetime(df["data.atl_date"],errors="coerce",format="mixed")
+  df["data.ath_date"] = pd.to_datetime(df["data.ath_date"], errors="coerce", utc=True).dt.tz_localize(None)
   
-  df["data.ath_date"] = pd.to_datetime(df["data.ath_date"],errors="coerce",format="mixed")
+  df["data.atl_date"] = pd.to_datetime(df["data.atl_date"], errors="coerce", utc=True).dt.tz_localize(None)
+  
+  df["data.last_updated"] = pd.to_datetime(df["data.last_updated"], errors="coerce", utc=True).dt.tz_localize(None)
   
   
   df=df.astype({
@@ -84,11 +85,10 @@ def transform_data(good,bad):
   df1 = df1.drop(columns=["errors"])
 #  print(df1.dtypes)
 
-  df1["data.ath_date"] = pd.to_datetime(df1["data.ath_date"],errors="coerce",format="mixed")
+  df1["data.ath_date"] = pd.to_datetime(df["data.ath_date"], errors="coerce", utc=True).dt.tz_localize(None)
+  df1["data.atl_date"] = pd.to_datetime(df["data.atl_date"], errors="coerce", utc=True).dt.tz_localize(None)
+  df1["data.last_updated"] = pd.to_datetime(df["data.last_updated"], errors="coerce", utc=True).dt.tz_localize(None)
   
-  df1["data.last_updated"] = pd.to_datetime(df1["data.last_updated"], errors="coerce",format="mixed")
-  
-  df1["data.atl_date"] = pd.to_datetime(df1["data.atl_date"],errors="coerce",format="mixed")
   
   
   df1["data.total_volume"] = df1["data.total_volume"].astype("int32")
