@@ -36,7 +36,7 @@ async def extract_api_data():
 
 
 
-
+# Run main
 async def main():
   data = await extract_api_data()
   print(len(data)) 
@@ -44,6 +44,7 @@ async def main():
 if __name__ == "__main__":
  # print("Data collected")
   asyncio.run(main())
+#The Extract
   
   
   
