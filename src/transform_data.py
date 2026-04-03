@@ -56,8 +56,6 @@ def transform_data(good,bad):
     
 #  df["market_cap_change_24h"] = df["market_cap_change_24h"].apply(lambda x: f"{x:,}")  
 
-  fill_value = 0
-  df = df.fillna(fill_value)
  # print(df.dtypes)
   
  # print(df["data.id"])
@@ -91,6 +89,8 @@ def transform_data(good,bad):
   
   
   
+  
+  
   df1["data.total_volume"] = df1["data.total_volume"].astype("int32")
   
   df1=df1.astype({
@@ -117,8 +117,6 @@ def transform_data(good,bad):
   "data.roi.percentage":"float32"
     })
   
-  fill_value = 0
-  df1= df1.fillna(fill_value)
   
   df1 = df1.drop(columns=["data.id"])
   df1["data.symbol"]=df1["data.symbol"].str.upper()
