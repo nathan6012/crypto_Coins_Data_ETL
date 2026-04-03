@@ -146,11 +146,13 @@ def transform_data(good,bad):
   "roi.percentage": "roi_percentage"
   }) # Better for Db 
 
-  print(data.dtypes)
-
+  data['roi_currency'] = data['roi_currency'].astype(str).replace({'nan': None})
+# Ensure roi_currency is a string, replace NaNs or numbers with empty string
+  
   
   data_records = data.to_dict(orient="records")
   print(type(data_records))
+  df1['roi_currency'] = df1['roi_currency'].astype(str).replace({'nan': None})
   
 
  # print(data.columns)
