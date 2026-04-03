@@ -30,30 +30,9 @@ def transform_data(good,bad):
   df["data.last_updated"] = pd.to_datetime(df["data.last_updated"], errors="coerce", utc=True).dt.tz_localize(None)
   
   
-  df=df.astype({
-  "data.current_price": "float32",
-  "data.high_24h": "float32",
-  "data.low_24h": "float32",
   
-  "data.price_change_24h": "float32",
-  "data.price_change_percentage_24h": "float32",
-  "data.market_cap_change_percentage_24h": "float32",
   
-  "data.circulating_supply": "float32",
-  "data.total_supply": "float32",
-  "data.max_supply": "float32",
-  
-  "data.ath":"float32",
-  "data.ath_change_percentage":"float32",
-  
-  "data.atl":"float32",
-  "data.atl_change_percentage":"float32",
-  
-  "data.roi.times":"float32",
-  "data.roi.currency":"str",
-  "data.roi.percentage":"float32"
-    })
-    
+ 
 #  df["market_cap_change_24h"] = df["market_cap_change_24h"].apply(lambda x: f"{x:,}")  
 
  # print(df.dtypes)
@@ -88,39 +67,11 @@ def transform_data(good,bad):
   df1["data.last_updated"] = pd.to_datetime(df["data.last_updated"], errors="coerce", utc=True).dt.tz_localize(None)
   
   
+  df1["data.total_volume"] = df1["data.total_volume"].fillna(0).astype("int32")
+  df1["data.market_cap_change_24h"] = df1["data.market_cap_change_24h"].fillna(0).astype("int64")
   
   
   
-  df1["data.total_volume"] = df1["data.total_volume"].astype("int32")
-  
-  df1=df1.astype({
-  "data.current_price": "float32",
-  "data.high_24h": "float32",
-  "data.low_24h": "float32",
-  
-  "data.price_change_24h": "float32",
-  "data.price_change_percentage_24h": "float32",
-  "data.market_cap_change_percentage_24h": "float32",
-  
-  "data.circulating_supply": "float32",
-  "data.total_supply": "float32",
-  "data.max_supply": "float32",
-  
-  "data.ath":"float32",
-  "data.ath_change_percentage":"float32",
-  
-  "data.atl":"float32",
-  "data.atl_change_percentage":"float32",
-  
-  "data.roi.times":"float32",
-  "data.roi.currency":"str",
-  "data.roi.percentage":"float32"
-    })
-  
-  
-  df1 = df1.drop(columns=["data.id"])
-  df1["data.symbol"]=df1["data.symbol"].str.upper()
-  df1["data.market_cap_change_24h"]=df1["data.market_cap_change_24h"].astype("int64")
   
   
 #  print(df1["data.roi.currency"])
