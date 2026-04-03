@@ -103,6 +103,11 @@ def transform_data(good,bad):
   data_records = data.to_dict(orient="records")
   print(type(data_records))
   
+  for record in data_records:
+    for k, v in record.items():
+      if isinstance(v, float) and pd.isna(v):
+        record[k] = None
+  
   
 
  # print(data.columns)
