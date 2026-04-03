@@ -1,38 +1,35 @@
 from datetime import datetime
-from sqlalchemy import create_engine 
+from sqlalchemy.ext.asyncio import create_async_engine
+import asyncio
+
 from sqlalchemy import text,select,update 
-from sqlalchemy import inspect 
-from sqlalchemy import insert,Text,Float
-from sqlalchemy.dialects.sqlite import insert
+#from sqlalchemy import inspect 
+from sqlalchemy import Text,Float
+from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy import UniqueConstraint 
 from sqlalchemy import(Table,Column,Integer,String,MetaData,ForeignKey,Index)
-from pathlib import Path
 from sqlalchemy import DateTime
 
+from dotenv import load_dotenv
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
+load_dotenv()
 
 
 
-
-dir_url = Path(__file__).resolve().parent
-root_dir = dir_url.parent
-storage = root_dir/"data"
-
-file = storage/"CryptoDB.db"
-db_url = f"sqlite:///{file}"
-
-
-def load_data_to_db(records): # change to add data 
+async def load_data_to_db(records):  
+  
+  db_url = os.getenv("DATABASE_URL")
   #Engine
-  engine = create_engine(db_url)#echo=True)
+  engine = create_async_engine(db_url,echo=False)#echo=True)
   #MetaData 
   meta_obj = MetaData()
-  #inspector 
-  inspector = inspect(engine)
-  tables = inspector.get_table_names()
+
+  
+#  inspector = inspect(engine)
+  #tables = inspector.get_table_names()
   
   #insert to update on conflict 
   crypto_markets = Table(
@@ -82,14 +79,16 @@ def load_data_to_db(records): # change to add data
   #Create The tables # Meta_obj must be closed
   # to avoid Db creation Erorrs 
  # ____________________________
-  meta_obj.create_all(engine)
+  async with engine.begin() as conn:
+    await conn.run_sync(meta_obj.create_all)
+    
   
   
   
   
 #Our insert /Update everytime   
   
-  with engine.connect() as conn:
+  async with engine.begin() as conn:
     stmt = insert(crypto_markets).values(records)
     stmt = stmt.on_conflict_do_update(
       index_elements=["symbol"],
@@ -122,23 +121,14 @@ def load_data_to_db(records): # change to add data
         "roi_percentage": stmt.excluded.roi_percentage,
 
         } )
-    conn.execute(stmt)
-    conn.commit()  
-  
-
-
-
-
-  
-  
+    await conn.execute(stmt)
+ 
       
-      
-      
-  with engine.connect() as conn:
-    stmt = (select(crypto_markets.c.name))
-    query = conn.execute(stmt)
-    for row in query:
-      print(row)
+  #with engine.connect() as conn:
+  #  stmt = (select(crypto_markets.c.name))
+   # query = conn.execute(stmt)
+  #  for row in query:
+    #  print(row)
       
  # with engine.connect() as conn:
   #  stmt = (select(crypto_markets.c.id))
@@ -150,11 +140,11 @@ def load_data_to_db(records): # change to add data
     
 
 #All this is tes
-def main():
-  load_data_to_db()
+async def main():
+  await load_data_to_db()
 
 if __name__ == "__main__":
-  main()
+  asyncio.run(main())
   
   
   

@@ -1,29 +1,15 @@
-# --- Virtual Environments ---
-# --- Environment ---
 .env
 env/
 venv/
-
-# --- Python Internals ---
 __pycache__/
+*.py[cod]
 *$py.class
 .pytest_cache/
 .mypy_cache/
 .ipynb_checkpoints/
 **/__pycache__/
-
-*.py[cod]
-
-
-# --- Data & Databases ---
-data/**/*
-!data/.gitkeep
-
-# --- Logs ---
-*.log
 logs/
-
-# --- Distribution / Packaging ---
+*.log
 dist/
 build/
 *.egg-info/

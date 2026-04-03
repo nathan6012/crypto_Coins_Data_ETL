@@ -1,0 +1,1199 @@
+[
+ {
+  "idx": 1,
+  "data": {
+   "id": "ethereum",
+   "symbol": "eth",
+   "name": "Ethereum",
+   "image": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628",
+   "current_price": 2049.89,
+   "market_cap": 247467058220,
+   "market_cap_rank": 2,
+   "fully_diluted_valuation": 247467058220,
+   "total_volume": 12016821774,
+   "high_24h": 2072.31,
+   "low_24h": 2043.92,
+   "price_change_24h": -10.271201948433372,
+   "price_change_percentage_24h": -0.49856,
+   "market_cap_change_24h": -997318641.6799316,
+   "market_cap_change_percentage_24h": -0.40139,
+   "circulating_supply": 120691290.3909929,
+   "total_supply": 120691290.3909929,
+   "max_supply": null,
+   "ath": 4946.05,
+   "ath_change_percentage": -58.55501,
+   "ath_date": "2025-08-24T19:21:03.333Z",
+   "atl": 0.432979,
+   "atl_change_percentage": 473338.60146,
+   "atl_date": "2015-10-20T00:00:00.000Z",
+   "roi": {
+    "times": 39.98276731452016,
+    "currency": "btc",
+    "percentage": 3998.276731452016
+   },
+   "last_updated": "2026-04-03T15:43:02.047Z"
+  },
+  "errors": [
+   {
+    "type": "int_from_float",
+    "loc": [
+     "market_cap_change_24h"
+    ],
+    "msg": "Input should be a valid integer, got a number with a fractional part",
+    "input": -997318641.6799316,
+    "url": "https://errors.pydantic.dev/2.12/v/int_from_float"
+   }
+  ]
+ },
+ {
+  "idx": 7,
+  "data": {
+   "id": "tron",
+   "symbol": "trx",
+   "name": "TRON",
+   "image": "https://coin-images.coingecko.com/coins/images/1094/large/tron-logo.png?1696502193",
+   "current_price": 0.314108,
+   "market_cap": 29772611055,
+   "market_cap_rank": 8,
+   "fully_diluted_valuation": 29772610070,
+   "total_volume": 430420915,
+   "high_24h": 0.315361,
+   "low_24h": 0.313283,
+   "price_change_24h": -0.000837556445173082,
+   "price_change_percentage_24h": -0.26594,
+   "market_cap_change_24h": -73226413.43121338,
+   "market_cap_change_percentage_24h": -0.24535,
+   "circulating_supply": 94764496796.72899,
+   "total_supply": 94764493662.27019,
+   "max_supply": null,
+   "ath": 0.431288,
+   "ath_change_percentage": -27.16973,
+   "ath_date": "2024-12-04T00:10:40.323Z",
+   "atl": 0.00180434,
+   "atl_change_percentage": 17308.48168,
+   "atl_date": "2017-11-12T00:00:00.000Z",
+   "roi": {
+    "times": 164.32025413270142,
+    "currency": "usd",
+    "percentage": 16432.02541327014
+   },
+   "last_updated": "2026-04-03T15:43:11.772Z"
+  },
+  "errors": [
+   {
+    "type": "int_from_float",
+    "loc": [
+     "market_cap_change_24h"
+    ],
+    "msg": "Input should be a valid integer, got a number with a fractional part",
+    "input": -73226413.43121338,
+    "url": "https://errors.pydantic.dev/2.12/v/int_from_float"
+   }
+  ]
+ },
+ {
+  "idx": 11,
+  "data": {
+   "id": "whitebit",
+   "symbol": "wbt",
+   "name": "WhiteBIT Coin",
+   "image": "https://coin-images.coingecko.com/coins/images/27045/large/wbt_token.png?1696526096",
+   "current_price": 51.17,
+   "market_cap": 10921213930,
+   "market_cap_rank": 12,
+   "fully_diluted_valuation": 16361350847,
+   "total_volume": 58408390,
+   "high_24h": 51.56,
+   "low_24h": 50.83,
+   "price_change_24h": -0.059505278885033874,
+   "price_change_percentage_24h": -0.11616,
+   "market_cap_change_24h": -14124503.903879166,
+   "market_cap_change_percentage_24h": -0.12916,
+   "circulating_supply": 213418274.0,
+   "total_supply": 319727393.0,
+   "max_supply": 400000000.0,
+   "ath": 64.11,
+   "ath_change_percentage": -20.16956,
+   "ath_date": "2025-12-10T20:16:13.582Z",
+   "atl": 3.06,
+   "atl_change_percentage": 1571.48974,
+   "atl_date": "2023-02-13T19:01:21.899Z",
+   "roi": null,
+   "last_updated": "2026-04-03T15:43:11.477Z"
+  },
+  "errors": [
+   {
+    "type": "int_from_float",
+    "loc": [
+     "market_cap_change_24h"
+    ],
+    "msg": "Input should be a valid integer, got a number with a fractional part",
+    "input": -14124503.903879166,
+    "url": "https://errors.pydantic.dev/2.12/v/int_from_float"
+   }
+  ]
+ },
+ {
+  "idx": 14,
+  "data": {
+   "id": "bitcoin-cash",
+   "symbol": "bch",
+   "name": "Bitcoin Cash",
+   "image": "https://coin-images.coingecko.com/coins/images/780/large/bitcoin-cash-circle.png?1696501932",
+   "current_price": 441.26,
+   "market_cap": 8832963259,
+   "market_cap_rank": 15,
+   "fully_diluted_valuation": 8832970154,
+   "total_volume": 136227783,
+   "high_24h": 445.97,
+   "low_24h": 440.41,
+   "price_change_24h": -2.969493163212917,
+   "price_change_percentage_24h": -0.66846,
+   "market_cap_change_24h": -58545237.1153698,
+   "market_cap_change_percentage_24h": -0.65844,
+   "circulating_supply": 20016203.02165078,
+   "total_supply": 20016218.64665078,
+   "max_supply": 21000000.0,
+   "ath": 3785.82,
+   "ath_change_percentage": -88.34443,
+   "ath_date": "2017-12-20T00:00:00.000Z",
+   "atl": 76.93,
+   "atl_change_percentage": 473.54932,
+   "atl_date": "2018-12-16T00:00:00.000Z",
+   "roi": null,
+   "last_updated": "2026-04-03T15:43:11.757Z"
+  },
+  "errors": [
+   {
+    "type": "int_from_float",
+    "loc": [
+     "market_cap_change_24h"
+    ],
+    "msg": "Input should be a valid integer, got a number with a fractional part",
+    "input": -58545237.1153698,
+    "url": "https://errors.pydantic.dev/2.12/v/int_from_float"
+   }
+  ]
+ },
+ {
+  "idx": 17,
+  "data": {
+   "id": "monero",
+   "symbol": "xmr",
+   "name": "Monero",
+   "image": "https://coin-images.coingecko.com/coins/images/69/large/monero_logo.png?1696501460",
+   "current_price": 321.55,
+   "market_cap": 5933265596,
+   "market_cap_rank": 18,
+   "fully_diluted_valuation": 5933265596,
+   "total_volume": 87481593,
+   "high_24h": 330.94,
+   "low_24h": 320.74,
+   "price_change_24h": -9.001445940307349,
+   "price_change_percentage_24h": -2.72317,
+   "market_cap_change_24h": -155002700.76724052,
+   "market_cap_change_percentage_24h": -2.54592,
+   "circulating_supply": 18446744.07370955,
+   "total_supply": 18446744.07370955,
+   "max_supply": null,
+   "ath": 797.73,
+   "ath_change_percentage": -59.69222,
+   "ath_date": "2026-01-14T19:34:07.049Z",
+   "atl": 0.216177,
+   "atl_change_percentage": 148643.70022,
+   "atl_date": "2015-01-14T00:00:00.000Z",
+   "roi": null,
+   "last_updated": "2026-04-03T15:43:11.469Z"
+  },
+  "errors": [
+   {
+    "type": "int_from_float",
+    "loc": [
+     "market_cap_change_24h"
+    ],
+    "msg": "Input should be a valid integer, got a number with a fractional part",
+    "input": -155002700.76724052,
+    "url": "https://errors.pydantic.dev/2.12/v/int_from_float"
+   }
+  ]
+ },
+ {
+  "idx": 22,
+  "data": {
+   "id": "dai",
+   "symbol": "dai",
+   "name": "Dai",
+   "image": "https://coin-images.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+   "current_price": 0.999875,
+   "market_cap": 4436731225,
+   "market_cap_rank": 23,
+   "fully_diluted_valuation": 4434107443,
+   "total_volume": 150897314,
+   "high_24h": 1.0,
+   "low_24h": 0.999568,
+   "price_change_24h": 0.00013709,
+   "price_change_percentage_24h": 0.01371,
+   "market_cap_change_24h": -6312775.419932365,
+   "market_cap_change_percentage_24h": -0.14208,
+   "circulating_supply": 4437057263.62815,
+   "total_supply": 4434433289.553856,
+   "max_supply": null,
+   "ath": 1.22,
+   "ath_change_percentage": -17.96597,
+   "ath_date": "2020-03-13T03:02:50.373Z",
+   "atl": 0.88196,
+   "atl_change_percentage": 13.3768,
+   "atl_date": "2023-03-11T07:50:50.514Z",
+   "roi": null,
+   "last_updated": "2026-04-03T15:43:11.712Z"
+  },
+  "errors": [
+   {
+    "type": "int_from_float",
+    "loc": [
+     "market_cap_change_24h"
+    ],
+    "msg": "Input should be a valid integer, got a number with a fractional part",
+    "input": -6312775.419932365,
+    "url": "https://errors.pydantic.dev/2.12/v/int_from_float"
+   }
+  ]
+ },
+ {
+  "idx": 29,
+  "data": {
+   "id": "rain",
+   "symbol": "rain",
+   "name": "Rain",
+   "image": "https://coin-images.coingecko.com/coins/images/69134/large/Rain_logo_1_.png?1762952191",
+   "current_price": 0.0075089,
+   "market_cap": 3591877390,
+   "market_cap_rank": 30,
+   "fully_diluted_valuation": 8634980549,
+   "total_volume": 26594934,
+   "high_24h": 0.00807707,
+   "low_24h": 0.00749856,
+   "price_change_24h": -0.000459204875989406,
+   "price_change_percentage_24h": -5.76304,
+   "market_cap_change_24h": -218753002.50108814,
+   "market_cap_change_percentage_24h": -5.7406,
+   "circulating_supply": 478326940944.3864,
+   "total_supply": 1149912255588.08,
+   "max_supply": 1150000000000.0,
+   "ath": 0.01090099,
+   "ath_change_percentage": -31.06141,
+   "ath_date": "2026-02-09T16:50:09.904Z",
+   "atl": 0.00222126,
+   "atl_change_percentage": 238.32105,
+   "atl_date": "2025-09-14T08:56:57.416Z",
+   "roi": null,
+   "last_updated": "2026-04-03T15:43:11.526Z"
+  },
+  "errors": [
+   {
+    "type": "int_from_float",
+    "loc": [
+     "market_cap_change_24h"
+    ],
+    "msg": "Input should be a valid integer, got a number with a fractional part",
+    "input": -218753002.50108814,
+    "url": "https://errors.pydantic.dev/2.12/v/int_from_float"
+   }
+  ]
+ },
+ {
+  "idx": 36,
+  "data": {
+   "id": "hashnote-usyc",
+   "symbol": "usyc",
+   "name": "Circle USYC",
+   "image": "https://coin-images.coingecko.com/coins/images/51054/large/Hashnote_SDYC_200x200.png?1730370965",
+   "current_price": 1.12,
+   "market_cap": 2702544220,
+   "market_cap_rank": 37,
+   "fully_diluted_valuation": 2702544220,
+   "total_volume": 112109,
+   "high_24h": null,
+   "low_24h": null,
+   "price_change_24h": null,
+   "price_change_percentage_24h": null,
+   "market_cap_change_24h": null,
+   "market_cap_change_percentage_24h": null,
+   "circulating_supply": 2410640505.570537,
+   "total_supply": 2410640505.570537,
+   "max_supply": null,
+   "ath": 1.12,
+   "ath_change_percentage": -0.00961,
+   "ath_date": "2026-04-01T14:21:00.962Z",
+   "atl": 1.026,
+   "atl_change_percentage": 9.25705,
+   "atl_date": "2024-12-05T22:31:20.475Z",
+   "roi": null,
+   "last_updated": "2026-04-01T23:25:53.126Z"
+  },
+  "errors": [
+   {
+    "type": "int_type",
+    "loc": [
+     "market_cap_change_24h"
+    ],
+    "msg": "Input should be a valid integer",
+    "input": null,
+    "url": "https://errors.pydantic.dev/2.12/v/int_type"
+   },
+   {
+    "type": "decimal_type",
+    "loc": [
+     "market_cap_change_percentage_24h"
+    ],
+    "msg": "Decimal input should be an integer, float, string or Decimal object",
+    "input": null,
+    "url": "https://errors.pydantic.dev/2.12/v/decimal_type"
+   }
+  ]
+ },
+ {
+  "idx": 37,
+  "data": {
+   "id": "tether-gold",
+   "symbol": "xaut",
+   "name": "Tether Gold",
+   "image": "https://coin-images.coingecko.com/coins/images/10481/large/logo.png?1774627372",
+   "current_price": 4631.29,
+   "market_cap": 2591988600,
+   "market_cap_rank": 38,
+   "fully_diluted_valuation": 3277607359,
+   "total_volume": 169939894,
+   "high_24h": 4650.97,
+   "low_24h": 4622.0,
+   "price_change_24h": -12.366273395175995,
+   "price_change_percentage_24h": -0.2663,
+   "market_cap_change_24h": -4712497.590906143,
+   "market_cap_change_percentage_24h": -0.18148,
+   "circulating_supply": 559698.64169,
+   "total_supply": 707747.089,
+   "max_supply": null,
+   "ath": 5504.62,
+   "ath_change_percentage": -15.87079,
+   "ath_date": "2026-01-29T00:00:00.000Z",
+   "atl": 1447.84,
+   "atl_change_percentage": 219.8548,
+   "atl_date": "2020-03-19T13:45:41.821Z",
+   "roi": null,
+   "last_updated": "2026-04-03T15:43:11.985Z"
+  },
+  "errors": [
+   {
+    "type": "int_from_float",
+    "loc": [
+     "market_cap_change_24h"
+    ],
+    "msg": "Input should be a valid integer, got a number with a fractional part",
+    "input": -4712497.590906143,
+    "url": "https://errors.pydantic.dev/2.12/v/int_from_float"
+   }
+  ]
+ },
+ {
+  "idx": 38,
+  "data": {
+   "id": "pax-gold",
+   "symbol": "paxg",
+   "name": "PAX Gold",
+   "image": "https://coin-images.coingecko.com/coins/images/9519/large/paxgold.png?1696509604",
+   "current_price": 4649.69,
+   "market_cap": 2390085391,
+   "market_cap_rank": 39,
+   "fully_diluted_valuation": 2390085391,
+   "total_volume": 130723474,
+   "high_24h": 4669.1,
+   "low_24h": 4638.68,
+   "price_change_24h": -7.502900327694078,
+   "price_change_percentage_24h": -0.1611,
+   "market_cap_change_24h": -4560294.163733959,
+   "market_cap_change_percentage_24h": -0.19044,
+   "circulating_supply": 514128.803,
+   "total_supply": 514128.803,
+   "max_supply": null,
+   "ath": 5619.09,
+   "ath_change_percentage": -17.271,
+   "ath_date": "2026-01-29T06:30:56.612Z",
+   "atl": 1399.64,
+   "atl_change_percentage": 232.12915,
+   "atl_date": "2019-11-18T03:09:35.959Z",
+   "roi": null,
+   "last_updated": "2026-04-03T15:43:12.421Z"
+  },
+  "errors": [
+   {
+    "type": "int_from_float",
+    "loc": [
+     "market_cap_change_24h"
+    ],
+    "msg": "Input should be a valid integer, got a number with a fractional part",
+    "input": -4560294.163733959,
+    "url": "https://errors.pydantic.dev/2.12/v/int_from_float"
+   }
+  ]
+ },
+ {
+  "idx": 45,
+  "data": {
+   "id": "falcon-finance",
+   "symbol": "usdf",
+   "name": "Falcon USD",
+   "image": "https://coin-images.coingecko.com/coins/images/54558/large/ff_200_X_200.png?1740741076",
+   "current_price": 0.998065,
+   "market_cap": 1742619039,
+   "market_cap_rank": 46,
+   "fully_diluted_valuation": 1742619039,
+   "total_volume": 591383,
+   "high_24h": 0.99955,
+   "low_24h": 0.997197,
+   "price_change_24h": 0.00013836,
+   "price_change_percentage_24h": 0.01386,
+   "market_cap_change_24h": -2299975.167237282,
+   "market_cap_change_percentage_24h": -0.13181,
+   "circulating_supply": 1745660415.97441,
+   "total_supply": 1745660415.97441,
+   "max_supply": null,
+   "ath": 1.075,
+   "ath_change_percentage": -7.17173,
+   "ath_date": "2025-05-08T21:25:42.071Z",
+   "atl": 0.943422,
+   "atl_change_percentage": 5.73379,
+   "atl_date": "2025-07-08T10:16:34.749Z",
+   "roi": null,
+   "last_updated": "2026-04-03T15:43:11.599Z"
+  },
+  "errors": [
+   {
+    "type": "int_from_float",
+    "loc": [
+     "market_cap_change_24h"
+    ],
+    "msg": "Input should be a valid integer, got a number with a fractional part",
+    "input": -2299975.167237282,
+    "url": "https://errors.pydantic.dev/2.12/v/int_from_float"
+   }
+  ]
+ },
+ {
+  "idx": 48,
+  "data": {
+   "id": "aster-2",
+   "symbol": "aster",
+   "name": "Aster",
+   "image": "https://coin-images.coingecko.com/coins/images/69040/large/_ASTER.png?1757326782",
+   "current_price": 0.656517,
+   "market_cap": 1614085611,
+   "market_cap_rank": 49,
+   "fully_diluted_valuation": 5135621316,
+   "total_volume": 66704532,
+   "high_24h": 0.668169,
+   "low_24h": 0.655204,
+   "price_change_24h": -0.005272929259124259,
+   "price_change_percentage_24h": -0.79677,
+   "market_cap_change_24h": -13418201.900106907,
+   "market_cap_change_percentage_24h": -0.82447,
+   "circulating_supply": 2458559719.12999,
+   "total_supply": 7822529124.595041,
+   "max_supply": 8000000000.0,
+   "ath": 2.41,
+   "ath_change_percentage": -72.74435,
+   "ath_date": "2025-09-24T11:18:14.634Z",
+   "atl": 0.099713,
+   "atl_change_percentage": 558.40324,
+   "atl_date": "2025-09-17T12:05:36.771Z",
+   "roi": null,
+   "last_updated": "2026-04-03T15:43:11.999Z"
+  },
+  "errors": [
+   {
+    "type": "int_from_float",
+    "loc": [
+     "market_cap_change_24h"
+    ],
+    "msg": "Input should be a valid integer, got a number with a fractional part",
+    "input": -13418201.900106907,
+    "url": "https://errors.pydantic.dev/2.12/v/int_from_float"
+   }
+  ]
+ },
+ {
+  "idx": 49,
+  "data": {
+   "id": "htx-dao",
+   "symbol": "htx",
+   "name": "HTX DAO",
+   "image": "https://coin-images.coingecko.com/coins/images/35491/large/Frame_1321318576.png?1708908626",
+   "current_price": 1.71e-06,
+   "market_cap": 1564857182,
+   "market_cap_rank": 50,
+   "fully_diluted_valuation": 1564857182,
+   "total_volume": 14385827,
+   "high_24h": 1.73e-06,
+   "low_24h": 1.71e-06,
+   "price_change_24h": -1.7373102584e-08,
+   "price_change_percentage_24h": -1.0073,
+   "market_cap_change_24h": -15900612.721765041,
+   "market_cap_change_percentage_24h": -1.00589,
+   "circulating_supply": 916533066327098.8,
+   "total_supply": 916533066327098.8,
+   "max_supply": 999990000000000.0,
+   "ath": 3.75e-06,
+   "ath_change_percentage": -54.48901,
+   "ath_date": "2024-12-04T00:16:20.770Z",
+   "atl": 8.00816e-07,
+   "atl_change_percentage": 113.20045,
+   "atl_date": "2024-08-05T13:31:33.427Z",
+   "roi": null,
+   "last_updated": "2026-04-03T15:43:11.925Z"
+  },
+  "errors": [
+   {
+    "type": "int_from_float",
+    "loc": [
+     "market_cap_change_24h"
+    ],
+    "msg": "Input should be a valid integer, got a number with a fractional part",
+    "input": -15900612.721765041,
+    "url": "https://errors.pydantic.dev/2.12/v/int_from_float"
+   }
+  ]
+ },
+ {
+  "idx": 55,
+  "data": {
+   "id": "bitget-token",
+   "symbol": "bgb",
+   "name": "Bitget Token",
+   "image": "https://coin-images.coingecko.com/coins/images/11610/large/Bitget_logo.png?1736925727",
+   "current_price": 1.91,
+   "market_cap": 1335217850,
+   "market_cap_rank": 56,
+   "fully_diluted_valuation": 1749024834,
+   "total_volume": 20511067,
+   "high_24h": 1.92,
+   "low_24h": 1.91,
+   "price_change_24h": -0.001715546068159268,
+   "price_change_percentage_24h": -0.08986,
+   "market_cap_change_24h": -98160.71561837196,
+   "market_cap_change_percentage_24h": -0.00735,
+   "circulating_supply": 699992035.9787906,
+   "total_supply": 916931610.9787906,
+   "max_supply": 2000000000.0,
+   "ath": 8.45,
+   "ath_change_percentage": -77.42719,
+   "ath_date": "2024-12-27T11:41:24.992Z",
+   "atl": 0.0142795,
+   "atl_change_percentage": 13258.13771,
+   "atl_date": "2020-06-25T04:17:05.895Z",
+   "roi": null,
+   "last_updated": "2026-04-03T15:43:11.853Z"
+  },
+  "errors": [
+   {
+    "type": "int_from_float",
+    "loc": [
+     "market_cap_change_24h"
+    ],
+    "msg": "Input should be a valid integer, got a number with a fractional part",
+    "input": -98160.71561837196,
+    "url": "https://errors.pydantic.dev/2.12/v/int_from_float"
+   }
+  ]
+ },
+ {
+  "idx": 56,
+  "data": {
+   "id": "bfusd",
+   "symbol": "bfusd",
+   "name": "BFUSD",
+   "image": "https://coin-images.coingecko.com/coins/images/68227/large/bfusd.png?1755132827",
+   "current_price": 0.999402,
+   "market_cap": 1319211055,
+   "market_cap_rank": 57,
+   "fully_diluted_valuation": 1319211055,
+   "total_volume": 2710903,
+   "high_24h": 0.9996,
+   "low_24h": 0.9992,
+   "price_change_24h": -9.6483019059956e-05,
+   "price_change_percentage_24h": -0.00965,
+   "market_cap_change_24h": -127357.58515906334,
+   "market_cap_change_percentage_24h": -0.00965,
+   "circulating_supply": 1320000000.0,
+   "total_supply": 1320000000.0,
+   "max_supply": null,
+   "ath": 1.007,
+   "ath_change_percentage": -0.73734,
+   "ath_date": "2025-10-10T21:40:40.468Z",
+   "atl": 0.997035,
+   "atl_change_percentage": 0.24726,
+   "atl_date": "2026-01-24T07:41:41.188Z",
+   "roi": null,
+   "last_updated": "2026-04-03T15:43:11.842Z"
+  },
+  "errors": [
+   {
+    "type": "int_from_float",
+    "loc": [
+     "market_cap_change_24h"
+    ],
+    "msg": "Input should be a valid integer, got a number with a fractional part",
+    "input": -127357.58515906334,
+    "url": "https://errors.pydantic.dev/2.12/v/int_from_float"
+   }
+  ]
+ },
+ {
+  "idx": 70,
+  "data": {
+   "id": "eutbl",
+   "symbol": "eutbl",
+   "name": "Spiko EU T-Bills Money Market Fund",
+   "image": "https://coin-images.coingecko.com/coins/images/39657/large/EUTBL.png?1723517425",
+   "current_price": 1.21,
+   "market_cap": 922152951,
+   "market_cap_rank": 71,
+   "fully_diluted_valuation": 922152951,
+   "total_volume": 0.0,
+   "high_24h": 1.21,
+   "low_24h": 1.21,
+   "price_change_24h": -0.002262637572767012,
+   "price_change_percentage_24h": -0.18673,
+   "market_cap_change_24h": -1725116.6348712444,
+   "market_cap_change_percentage_24h": -0.18673,
+   "circulating_supply": 762436130.13175,
+   "total_supply": 762436130.13175,
+   "max_supply": null,
+   "ath": 1.26,
+   "ath_change_percentage": -4.08679,
+   "ath_date": "2026-01-27T21:00:08.465Z",
+   "atl": 1.011,
+   "atl_change_percentage": 19.63972,
+   "atl_date": "2024-08-15T09:45:23.684Z",
+   "roi": null,
+   "last_updated": "2026-04-03T15:40:10.924Z"
+  },
+  "errors": [
+   {
+    "type": "int_from_float",
+    "loc": [
+     "market_cap_change_24h"
+    ],
+    "msg": "Input should be a valid integer, got a number with a fractional part",
+    "input": -1725116.6348712444,
+    "url": "https://errors.pydantic.dev/2.12/v/int_from_float"
+   }
+  ]
+ },
+ {
+  "idx": 72,
+  "data": {
+   "id": "usdtb",
+   "symbol": "usdtb",
+   "name": "USDtb",
+   "image": "https://coin-images.coingecko.com/coins/images/52804/large/76357aa8-4ef7-446c-bad3-a3f944eeec7a.jpeg?1758277468",
+   "current_price": 0.999688,
+   "market_cap": 863424953,
+   "market_cap_rank": 73,
+   "fully_diluted_valuation": 863424953,
+   "total_volume": 1318285,
+   "high_24h": 1.001,
+   "low_24h": 0.997572,
+   "price_change_24h": 0.00018499,
+   "price_change_percentage_24h": 0.01851,
+   "market_cap_change_24h": -370988.74153137207,
+   "market_cap_change_percentage_24h": -0.04295,
+   "circulating_supply": 863693694.5761826,
+   "total_supply": 863693694.5761826,
+   "max_supply": null,
+   "ath": 1.057,
+   "ath_change_percentage": -5.42355,
+   "ath_date": "2025-09-20T13:20:33.315Z",
+   "atl": 0.900502,
+   "atl_change_percentage": 11.01455,
+   "atl_date": "2025-07-17T08:05:52.672Z",
+   "roi": null,
+   "last_updated": "2026-04-03T15:43:11.863Z"
+  },
+  "errors": [
+   {
+    "type": "int_from_float",
+    "loc": [
+     "market_cap_change_24h"
+    ],
+    "msg": "Input should be a valid integer, got a number with a fractional part",
+    "input": -370988.74153137207,
+    "url": "https://errors.pydantic.dev/2.12/v/int_from_float"
+   }
+  ]
+ },
+ {
+  "idx": 75,
+  "data": {
+   "id": "kaspa",
+   "symbol": "kas",
+   "name": "Kaspa",
+   "image": "https://coin-images.coingecko.com/coins/images/25751/large/kaspa-icon-exchanges.png?1696524837",
+   "current_price": 0.0310362,
+   "market_cap": 848245542,
+   "market_cap_rank": 76,
+   "fully_diluted_valuation": 848465578,
+   "total_volume": 15401314,
+   "high_24h": 0.03167156,
+   "low_24h": 0.0307257,
+   "price_change_24h": -0.000276839103041562,
+   "price_change_percentage_24h": -0.8841,
+   "market_cap_change_24h": -6950907.575553775,
+   "market_cap_change_percentage_24h": -0.81278,
+   "circulating_supply": 27326836350.15542,
+   "total_supply": 27333924961.50944,
+   "max_supply": 28704026601.0,
+   "ath": 0.207411,
+   "ath_change_percentage": -85.03275,
+   "ath_date": "2024-08-01T00:40:47.164Z",
+   "atl": 0.00017105,
+   "atl_change_percentage": 18048.95696,
+   "atl_date": "2022-05-26T14:42:59.316Z",
+   "roi": null,
+   "last_updated": "2026-04-03T15:43:12.113Z"
+  },
+  "errors": [
+   {
+    "type": "int_from_float",
+    "loc": [
+     "market_cap_change_24h"
+    ],
+    "msg": "Input should be a valid integer, got a number with a fractional part",
+    "input": -6950907.575553775,
+    "url": "https://errors.pydantic.dev/2.12/v/int_from_float"
+   }
+  ]
+ },
+ {
+  "idx": 76,
+  "data": {
+   "id": "morpho",
+   "symbol": "morpho",
+   "name": "Morpho",
+   "image": "https://coin-images.coingecko.com/coins/images/29837/large/Morpho-token-icon.png?1726771230",
+   "current_price": 1.49,
+   "market_cap": 823710982,
+   "market_cap_rank": 77,
+   "fully_diluted_valuation": 1492261857,
+   "total_volume": 13274619,
+   "high_24h": 1.53,
+   "low_24h": 1.48,
+   "price_change_24h": -0.029379262464936495,
+   "price_change_percentage_24h": -1.93056,
+   "market_cap_change_24h": -15695210.803429604,
+   "market_cap_change_percentage_24h": -1.8698,
+   "circulating_supply": 551988230.5816555,
+   "total_supply": 1000000000.0,
+   "max_supply": 1000000000.0,
+   "ath": 4.17,
+   "ath_change_percentage": -64.21484,
+   "ath_date": "2025-01-17T12:46:19.818Z",
+   "atl": 0.713151,
+   "atl_change_percentage": 109.27655,
+   "atl_date": "2024-11-25T01:55:43.353Z",
+   "roi": null,
+   "last_updated": "2026-04-03T15:43:11.951Z"
+  },
+  "errors": [
+   {
+    "type": "int_from_float",
+    "loc": [
+     "market_cap_change_24h"
+    ],
+    "msg": "Input should be a valid integer, got a number with a fractional part",
+    "input": -15695210.803429604,
+    "url": "https://errors.pydantic.dev/2.12/v/int_from_float"
+   }
+  ]
+ },
+ {
+  "idx": 77,
+  "data": {
+   "id": "midnight-3",
+   "symbol": "night",
+   "name": "Midnight",
+   "image": "https://coin-images.coingecko.com/coins/images/71015/large/midnight.png?1765193080",
+   "current_price": 0.04407627,
+   "market_cap": 731680401,
+   "market_cap_rank": 78,
+   "fully_diluted_valuation": 1057379858,
+   "total_volume": 211518063,
+   "high_24h": 0.04757136,
+   "low_24h": 0.04369833,
+   "price_change_24h": -0.003092916027955556,
+   "price_change_percentage_24h": -6.55707,
+   "market_cap_change_24h": -51175674.401595235,
+   "market_cap_change_percentage_24h": -6.53705,
+   "circulating_supply": 16607399400.63495,
+   "total_supply": 24000000000.0,
+   "max_supply": 24000000000.0,
+   "ath": 0.118529,
+   "ath_change_percentage": -62.69543,
+   "ath_date": "2025-12-09T09:29:38.386Z",
+   "atl": 0.02378032,
+   "atl_change_percentage": 85.93835,
+   "atl_date": "2025-12-09T09:48:36.670Z",
+   "roi": null,
+   "last_updated": "2026-04-03T15:43:12.293Z"
+  },
+  "errors": [
+   {
+    "type": "int_from_float",
+    "loc": [
+     "market_cap_change_24h"
+    ],
+    "msg": "Input should be a valid integer, got a number with a fractional part",
+    "input": -51175674.401595235,
+    "url": "https://errors.pydantic.dev/2.12/v/int_from_float"
+   }
+  ]
+ },
+ {
+  "idx": 79,
+  "data": {
+   "id": "aptos",
+   "symbol": "apt",
+   "name": "Aptos",
+   "image": "https://coin-images.coingecko.com/coins/images/26455/large/Aptos-Network-Symbol-Black-RGB-1x.png?1761789140",
+   "current_price": 0.852283,
+   "market_cap": 677066227,
+   "market_cap_rank": 80,
+   "fully_diluted_valuation": 1023390984,
+   "total_volume": 38771257,
+   "high_24h": 0.871297,
+   "low_24h": 0.846612,
+   "price_change_24h": -0.000987845567655743,
+   "price_change_percentage_24h": -0.11577,
+   "market_cap_change_24h": -1056170.404372692,
+   "market_cap_change_percentage_24h": -0.15575,
+   "circulating_supply": 794315632.0613302,
+   "total_supply": 1200614391.554635,
+   "max_supply": 2100000000.0,
+   "ath": 19.92,
+   "ath_change_percentage": -95.72113,
+   "ath_date": "2023-01-26T14:25:17.390Z",
+   "atl": 0.795451,
+   "atl_change_percentage": 7.1566,
+   "atl_date": "2026-02-23T01:30:53.133Z",
+   "roi": null,
+   "last_updated": "2026-04-03T15:43:12.170Z"
+  },
+  "errors": [
+   {
+    "type": "int_from_float",
+    "loc": [
+     "market_cap_change_24h"
+    ],
+    "msg": "Input should be a valid integer, got a number with a fractional part",
+    "input": -1056170.404372692,
+    "url": "https://errors.pydantic.dev/2.12/v/int_from_float"
+   }
+  ]
+ },
+ {
+  "idx": 82,
+  "data": {
+   "id": "flare-networks",
+   "symbol": "flr",
+   "name": "Flare",
+   "image": "https://coin-images.coingecko.com/coins/images/28624/large/FLR-icon200x200.png?1696527609",
+   "current_price": 0.00758875,
+   "market_cap": 649000468,
+   "market_cap_rank": 83,
+   "fully_diluted_valuation": 799906389,
+   "total_volume": 3031985,
+   "high_24h": 0.00770416,
+   "low_24h": 0.00754379,
+   "price_change_24h": -2.15817437965e-06,
+   "price_change_percentage_24h": -0.02843,
+   "market_cap_change_24h": -110488.92567372322,
+   "market_cap_change_percentage_24h": -0.01702,
+   "circulating_supply": 85523580090.02022,
+   "total_supply": 105409566709.6625,
+   "max_supply": null,
+   "ath": 0.150073,
+   "ath_change_percentage": -94.94317,
+   "ath_date": "2023-01-10T03:14:05.921Z",
+   "atl": 0.007361,
+   "atl_change_percentage": 3.09639,
+   "atl_date": "2026-04-02T13:21:12.916Z",
+   "roi": null,
+   "last_updated": "2026-04-03T15:43:12.448Z"
+  },
+  "errors": [
+   {
+    "type": "int_from_float",
+    "loc": [
+     "market_cap_change_24h"
+    ],
+    "msg": "Input should be a valid integer, got a number with a fractional part",
+    "input": -110488.92567372322,
+    "url": "https://errors.pydantic.dev/2.12/v/int_from_float"
+   }
+  ]
+ },
+ {
+  "idx": 85,
+  "data": {
+   "id": "beldex",
+   "symbol": "bdx",
+   "name": "Beldex",
+   "image": "https://coin-images.coingecko.com/coins/images/5111/large/Beldex.png?1696505631",
+   "current_price": 0.079921,
+   "market_cap": 618832328,
+   "market_cap_rank": 86,
+   "fully_diluted_valuation": 794758440,
+   "total_volume": 12764466,
+   "high_24h": 0.080227,
+   "low_24h": 0.079651,
+   "price_change_24h": -0.000290645473672566,
+   "price_change_percentage_24h": -0.36235,
+   "market_cap_change_24h": -1650955.089685917,
+   "market_cap_change_percentage_24h": -0.26608,
+   "circulating_supply": 7737316293.088728,
+   "total_supply": 9936936305.557796,
+   "max_supply": null,
+   "ath": 0.450785,
+   "ath_change_percentage": -82.258,
+   "ath_date": "2018-12-17T00:00:00.000Z",
+   "atl": 0.00027519,
+   "atl_change_percentage": 28963.38961,
+   "atl_date": "2019-11-01T11:05:12.090Z",
+   "roi": {
+    "times": -0.6803161316429834,
+    "currency": "usd",
+    "percentage": -68.03161316429835
+   },
+   "last_updated": "2026-04-03T15:43:11.922Z"
+  },
+  "errors": [
+   {
+    "type": "int_from_float",
+    "loc": [
+     "market_cap_change_24h"
+    ],
+    "msg": "Input should be a valid integer, got a number with a fractional part",
+    "input": -1650955.089685917,
+    "url": "https://errors.pydantic.dev/2.12/v/int_from_float"
+   }
+  ]
+ },
+ {
+  "idx": 87,
+  "data": {
+   "id": "hash-2",
+   "symbol": "hash",
+   "name": "Provenance Blockchain",
+   "image": "https://coin-images.coingecko.com/coins/images/66154/large/Hastra_Icon.png?1748497203",
+   "current_price": 0.01063865,
+   "market_cap": 600286637,
+   "market_cap_rank": 88,
+   "fully_diluted_valuation": 1063892752,
+   "total_volume": 4626.06,
+   "high_24h": 0.01143567,
+   "low_24h": 0.01044238,
+   "price_change_24h": 0.00019627,
+   "price_change_percentage_24h": 1.87954,
+   "market_cap_change_24h": 11483943,
+   "market_cap_change_percentage_24h": 1.95039,
+   "circulating_supply": 56423604357.0,
+   "total_supply": 100000000000.0,
+   "max_supply": 100000000000.0,
+   "ath": 0.060147,
+   "ath_change_percentage": -82.29883,
+   "ath_date": "2025-09-14T16:52:41.627Z",
+   "atl": 0.00940996,
+   "atl_change_percentage": 13.14296,
+   "atl_date": "2026-03-30T23:46:20.691Z",
+   "roi": null,
+   "last_updated": "2026-04-03T15:43:11.985Z"
+  },
+  "errors": [
+   {
+    "type": "int_from_float",
+    "loc": [
+     "total_volume"
+    ],
+    "msg": "Input should be a valid integer, got a number with a fractional part",
+    "input": 4626.06,
+    "url": "https://errors.pydantic.dev/2.12/v/int_from_float"
+   }
+  ]
+ },
+ {
+  "idx": 88,
+  "data": {
+   "id": "stable-2",
+   "symbol": "stable",
+   "name": "\u200b\u200bStable",
+   "image": "https://coin-images.coingecko.com/coins/images/69242/large/stable-logotype-framed-square-light.png?1762753913",
+   "current_price": 0.02788071,
+   "market_cap": 598213696,
+   "market_cap_rank": 89,
+   "fully_diluted_valuation": 2788070911,
+   "total_volume": 42544355,
+   "high_24h": 0.03065651,
+   "low_24h": 0.02724005,
+   "price_change_24h": -0.001080446474741599,
+   "price_change_percentage_24h": -3.73067,
+   "market_cap_change_24h": -28433710.156320095,
+   "market_cap_change_percentage_24h": -4.53743,
+   "circulating_supply": 21456186556.0,
+   "total_supply": 100000000000.0,
+   "max_supply": 100000000000.0,
+   "ath": 0.0388874,
+   "ath_change_percentage": -28.17227,
+   "ath_date": "2026-02-27T01:55:43.571Z",
+   "atl": 0.0092214,
+   "atl_change_percentage": 202.90348,
+   "atl_date": "2025-12-24T05:49:32.232Z",
+   "roi": null,
+   "last_updated": "2026-04-03T15:43:12.262Z"
+  },
+  "errors": [
+   {
+    "type": "int_from_float",
+    "loc": [
+     "market_cap_change_24h"
+    ],
+    "msg": "Input should be a valid integer, got a number with a fractional part",
+    "input": -28433710.156320095,
+    "url": "https://errors.pydantic.dev/2.12/v/int_from_float"
+   }
+  ]
+ },
+ {
+  "idx": 93,
+  "data": {
+   "id": "usual-usd",
+   "symbol": "usd0",
+   "name": "Usual USD",
+   "image": "https://coin-images.coingecko.com/coins/images/38272/large/USD0LOGO.png?1716962811",
+   "current_price": 0.995694,
+   "market_cap": 556369285,
+   "market_cap_rank": 94,
+   "fully_diluted_valuation": 556369285,
+   "total_volume": 5314563,
+   "high_24h": 1.004,
+   "low_24h": 0.993153,
+   "price_change_24h": -0.001126083859944726,
+   "price_change_percentage_24h": -0.11297,
+   "market_cap_change_24h": -4074675.523640156,
+   "market_cap_change_percentage_24h": -0.72704,
+   "circulating_supply": 558587926.5993425,
+   "total_supply": 558587926.5993425,
+   "max_supply": null,
+   "ath": 1.33,
+   "ath_change_percentage": -24.89298,
+   "ath_date": "2024-07-12T08:28:59.311Z",
+   "atl": 0.962885,
+   "atl_change_percentage": 3.40732,
+   "atl_date": "2025-04-10T08:30:51.088Z",
+   "roi": null,
+   "last_updated": "2026-04-03T15:43:12.407Z"
+  },
+  "errors": [
+   {
+    "type": "int_from_float",
+    "loc": [
+     "market_cap_change_24h"
+    ],
+    "msg": "Input should be a valid integer, got a number with a fractional part",
+    "input": -4074675.523640156,
+    "url": "https://errors.pydantic.dev/2.12/v/int_from_float"
+   }
+  ]
+ },
+ {
+  "idx": 94,
+  "data": {
+   "id": "just",
+   "symbol": "jst",
+   "name": "JUST",
+   "image": "https://coin-images.coingecko.com/coins/images/11095/large/JUST.jpg?1696511035",
+   "current_price": 0.06217,
+   "market_cap": 548266515,
+   "market_cap_rank": 95,
+   "fully_diluted_valuation": 548266515,
+   "total_volume": 24569449,
+   "high_24h": 0.064813,
+   "low_24h": 0.062128,
+   "price_change_24h": -0.001021028168548231,
+   "price_change_percentage_24h": -1.61578,
+   "market_cap_change_24h": -10598928.545244455,
+   "market_cap_change_percentage_24h": -1.89651,
+   "circulating_supply": 8815108920.581306,
+   "total_supply": 8815108920.581306,
+   "max_supply": 9900000000.0,
+   "ath": 0.193254,
+   "ath_change_percentage": -67.81555,
+   "ath_date": "2021-04-05T04:34:23.454Z",
+   "atl": 0.00476275,
+   "atl_change_percentage": 1205.92258,
+   "atl_date": "2020-05-09T06:08:54.872Z",
+   "roi": null,
+   "last_updated": "2026-04-03T15:43:12.518Z"
+  },
+  "errors": [
+   {
+    "type": "int_from_float",
+    "loc": [
+     "market_cap_change_24h"
+    ],
+    "msg": "Input should be a valid integer, got a number with a fractional part",
+    "input": -10598928.545244455,
+    "url": "https://errors.pydantic.dev/2.12/v/int_from_float"
+   }
+  ]
+ },
+ {
+  "idx": 98,
+  "data": {
+   "id": "a7a5",
+   "symbol": "a7a5",
+   "name": "A7A5",
+   "image": "https://coin-images.coingecko.com/coins/images/66657/large/A7A5_200.png?1750163839",
+   "current_price": 0.01235813,
+   "market_cap": 484440716,
+   "market_cap_rank": 99,
+   "fully_diluted_valuation": 484440716,
+   "total_volume": 841.63,
+   "high_24h": 0.01240755,
+   "low_24h": 0.01222014,
+   "price_change_24h": 0.00012703,
+   "price_change_percentage_24h": 1.03856,
+   "market_cap_change_24h": 4957768,
+   "market_cap_change_percentage_24h": 1.03398,
+   "circulating_supply": 39200176298.67074,
+   "total_supply": 39200176298.67074,
+   "max_supply": null,
+   "ath": 0.229635,
+   "ath_change_percentage": -94.61796,
+   "ath_date": "2025-08-14T23:03:39.275Z",
+   "atl": 1.048e-05,
+   "atl_change_percentage": 117856.79295,
+   "atl_date": "2025-08-21T17:38:27.654Z",
+   "roi": null,
+   "last_updated": "2026-04-03T15:43:11.934Z"
+  },
+  "errors": [
+   {
+    "type": "int_from_float",
+    "loc": [
+     "total_volume"
+    ],
+    "msg": "Input should be a valid integer, got a number with a fractional part",
+    "input": 841.63,
+    "url": "https://errors.pydantic.dev/2.12/v/int_from_float"
+   }
+  ]
+ }
+]

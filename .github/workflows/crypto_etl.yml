@@ -2,6 +2,7 @@ name: crypto ETL pipeline
 
 on:
   push:
+      
     branches:
       - main
   workflow_dispatch: {}
@@ -19,7 +20,10 @@ jobs:
       GECKO_API_KEY: ${{ secrets.GECKO_API_KEY }}
       NEON_POSTGRES: ${{ secrets.NEON_POSTGRES }}
       SLACK_WEB_HOOK_URL: ${{ secrets.SLACK_WEB_HOOK_URL }}
+<<<<<<< HEAD
       
+=======
+>>>>>>> 6aeb018 (Set up ETL GitHub Actions with cron, cache, and Slack alerts)
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -45,6 +49,7 @@ jobs:
       - name: Run ETL workflow
         run: python -m src.main
         
+<<<<<<< HEAD
       - name: Slack Notification Success
         if: ${{ success() }}
         uses: rtCamp/action-slack-notify@v2
@@ -62,3 +67,6 @@ jobs:
           
  
         
+=======
+      
+>>>>>>> 6aeb018 (Set up ETL GitHub Actions with cron, cache, and Slack alerts)
