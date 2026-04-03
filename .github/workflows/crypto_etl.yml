@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch: {}
+  workflow_dispatch:
   schedule:
     - cron: "0 5 * * *"
 jobs:
@@ -12,7 +12,7 @@ jobs:
     environment: Env
     env:
       PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/src
-      GECKO_API_KEY: ${{ secrets.GECKO_API_KEY }}
+      API_KEY: ${{ secrets.API_KEY }}
       NEON_POSTGRES: ${{ secrets.NEON_POSTGRES }}
 
     steps:
@@ -22,7 +22,9 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-          
+      - name: Run Tests
+        run: python -m pytest tests/
+
       - name: cache pip 
         uses: actions/cache@v3
         with: 
@@ -33,6 +35,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
+      - name: Run Tests
+        run: python -m pytest tests/
 
       - name: Run ETL workflow
         run: python -m src.main
