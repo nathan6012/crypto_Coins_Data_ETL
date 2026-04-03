@@ -29,7 +29,10 @@ def transform_data(good,bad):
   
   df["data.last_updated"] = pd.to_datetime(df["data.last_updated"], errors="coerce", utc=True).dt.tz_localize(None)
   
+  df["data.market_cap_change_24h"] = df1["data.market_cap_change_24h"].astype("int64")
   
+  df["data.total_volume"] = df["data.total_volume"].fillna(0).astype("int32")
+  df["data.market_cap_change_24h"] = df["data.market_cap_change_24h"].fillna(0).astype("int64")
   
   
  
@@ -69,6 +72,7 @@ def transform_data(good,bad):
   
   df1["data.total_volume"] = df1["data.total_volume"].fillna(0).astype("int32")
   df1["data.market_cap_change_24h"] = df1["data.market_cap_change_24h"].fillna(0).astype("int64")
+  df1["data.market_cap_change_24h"] = df1["data.market_cap_change_24h"].astype("int64")
   
   
   
