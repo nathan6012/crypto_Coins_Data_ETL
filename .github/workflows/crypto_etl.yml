@@ -1,4 +1,5 @@
 name: crypto ETL pipeline
+
 on:
   push:
     branches:
