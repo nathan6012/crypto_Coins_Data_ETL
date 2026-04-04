@@ -34,13 +34,6 @@ def transform_data(good,bad):
     "data.roi.percentage": "roi_percentage"
 })  
   
-
-  
-  
- 
-  
-  
-  
   
     #print(df1.columns)
  # print(df1["errors"])
@@ -133,7 +126,7 @@ def transform_data(good,bad):
   
   print("Data Transformed")
   
-  print(cleaned_records)
+  print(len(cleaned_records)
   print(type(cleaned_records))
   
   

@@ -10,7 +10,6 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
-
   
 def validate(data,Model):
   valid_fields = []
@@ -66,7 +65,6 @@ def validate(data,Model):
   
   return  valid_fields,invalid_fields
   
-
 
 
 def main():

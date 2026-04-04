@@ -21,8 +21,8 @@ This project follows a standard ETL workflow:
 2. **Save** raw API responses locally
 3. **Validate** incoming records using Pydantic
 4. **Transform** and clean the dataset with Pandas
-5. **Load** the final data into SQLite using SQLAlchemy
-6. **Orchestrate** and automate the workflow with Prefect Cloud
+5. **Load** the final data into Neon PostgresSql using SQLAlchemy core 
+6. **Orchestrate** and automate the workflow with Prefect and Github Actions 
 
 The goal of this project is to practice building a structured, production-style data pipeline rather than a one-off script.
 
@@ -36,7 +36,7 @@ The goal of this project is to practice building a structured, production-style 
 - **Pydantic** – schema validation
 - **HTTPX** – API requests
 - **SQLAlchemy** – database modeling and loading
-- **SQLite** – local database storage
+- **PostgresSql** – Online database storage
 - **GitHub Actions** – CI/CD workflow automation
 
 ---
@@ -52,8 +52,8 @@ project/
 │
 ├── data/
 │   ├── raw/         # raw API responses (json/csv)
-│   ├── processed/   # cleaned / transformed outputs
-│   └── db/          # SQLite database
+│ 
+│ 
 │
 ├── src/
 │   ├── __init__.py
@@ -63,7 +63,7 @@ project/
 │   ├── transform_data.py
 │   ├── load_data.py
 │   └── models.py
-│____tests/
+│____tests/ # to be added in updates order 
 
 ├── .env
 ├── .gitignore
@@ -72,12 +72,11 @@ project/
 └── README.md
 
 ## How to Use
-
 After setting up the project, run the pipeline to fetch the latest cryptocurrency market data from CoinGecko.
 
 ## Execution
 
-This pipeline is designed to run automatically through **Prefect Cloud**.
+This pipeline is designed to run automatically through **Prefect Github Actions **.
 
 It can also be triggered locally for development and testing:
 

@@ -143,6 +143,7 @@ async def load_data_to_db(records):
 #All this is tes
 async def main():
   await load_data_to_db()
+  print("Loaded To Your DataBase")
 
 if __name__ == "__main__":
   asyncio.run(main())
