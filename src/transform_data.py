@@ -14,8 +14,6 @@ def transform_data(good,bad):
   df = pd.json_normalize(good)
   df1 = pd.json_normalize(bad)
 
-  
-  
   #This is the valid data
   #display settings
   pd.set_option("display.max_columns", None)
@@ -29,52 +27,42 @@ def transform_data(good,bad):
   
   df["data.last_updated"] = pd.to_datetime(df["data.last_updated"], errors="coerce", utc=True).dt.tz_localize(None)
   
-  df["data.market_cap_change_24h"] = df1["data.market_cap_change_24h"].astype("int64")
   
-  df["data.total_volume"] = df["data.total_volume"].fillna(0).astype("int32")
-  df["data.market_cap_change_24h"] = df["data.market_cap_change_24h"].fillna(0).astype("int64")
+  df = df.rename(columns={
+    "data.roi.currency": "roi_currency",
+    "data.roi.times": "roi_times",
+    "data.roi.percentage": "roi_percentage"
+})  
   
-  
- 
-#  df["market_cap_change_24h"] = df["market_cap_change_24h"].apply(lambda x: f"{x:,}")  
 
- # print(df.dtypes)
   
- # print(df["data.id"])
- # print("Saved")
+  
  
-  df = df.drop(columns=["data.id"])
- # df["data.symbol"]=df["data.symbol"].str.upper()
   
   
-#  print(df["data.roi.currency"])
- # print(df.dtypes)
-  
- # df.to_csv("test_csv.csv",index=False)
- 
- # print(df["data.last_updated"])
-  
-  
-  
-  print()# We can have some separation of output 
-  print()
   
   
     #print(df1.columns)
  # print(df1["errors"])
-  df1 = df1.drop(columns=["errors"])
+  
 #  print(df1.dtypes)
 
-  df1["data.ath_date"] = pd.to_datetime(df["data.ath_date"], errors="coerce", utc=True).dt.tz_localize(None)
-  df1["data.atl_date"] = pd.to_datetime(df["data.atl_date"], errors="coerce", utc=True).dt.tz_localize(None)
-  df1["data.last_updated"] = pd.to_datetime(df["data.last_updated"], errors="coerce", utc=True).dt.tz_localize(None)
+  df1["data.ath_date"] = pd.to_datetime(df1["data.ath_date"], errors="coerce", utc=True).dt.tz_localize(None)
   
+  df1["data.atl_date"] = pd.to_datetime(df1["data.atl_date"], errors="coerce", utc=True).dt.tz_localize(None)
   
-  df1["data.total_volume"] = df1["data.total_volume"].fillna(0).astype("int32")
-  df1["data.market_cap_change_24h"] = df1["data.market_cap_change_24h"].fillna(0).astype("int64")
-  df1["data.market_cap_change_24h"] = df1["data.market_cap_change_24h"].astype("int64")
+  df1["data.last_updated"] = pd.to_datetime(df1["data.last_updated"], errors="coerce", utc=True).dt.tz_localize(None)
   
+  df1 = df1.drop(columns=["errors"])
   
+
+    
+  df1 = df1.rename(columns={
+    "data.roi.currency": "roi_currency",
+    "data.roi.times": "roi_times",
+    "data.roi.percentage": "roi_percentage"})  
+  
+
   
   
   
@@ -93,13 +81,37 @@ def transform_data(good,bad):
   data.columns=data.columns.str.replace("data.","",regex=False)
   #data.columns=data.columns.str.replace("_"," ",regex=False)
  # data.columns=data.columns.str.upper()
-  data = data.rename(columns={
-  "roi.times": "roi_times",
-  "roi.currency": "roi_currency",
-  "roi.percentage": "roi_percentage"
-  }) # Better for Db 
-
-  data['roi_currency'] = data.get('roi_currency', None).astype(str).replace({'0.0': None, 'nan': None})
+  
+ # print(data.dtypes)
+  float_cols = [
+        "current_price", "total_volume", "high_24h", "low_24h",
+        "price_change_24h", "price_change_percentage_24h",
+        "market_cap_change_24h", "market_cap_change_percentage_24h",
+        "circulating_supply", "total_supply", "max_supply",
+        "ath", "ath_change_percentage", "atl", "atl_change_percentage",
+        "roi_times", "roi_percentage"
+    ]
+  for col in float_cols:
+    if col in data.columns:
+      data[col] = pd.to_numeric(data[col], errors="coerce")  
+      
+      
+      
+  int_cols = ["market_cap", "market_cap_rank", "fully_diluted_valuation"]  
+  for col in int_cols:
+    if col in data.columns:
+      data[col] = pd.to_numeric(data[col], errors="coerce", downcast="integer")
+      
+      
+  str_cols = ["id", "symbol", "name", "roi_currency"] 
+  for col in str_cols:
+    if col in df.columns:
+      data[col] = data[col].astype(str).replace("nan", None)
+  
+ # data = data.where(data.notnull(data), None)
+    
+      
+      
   
 # Ensure roi_currency is a string, replace NaNs or numbers with empty string
   
@@ -107,10 +119,13 @@ def transform_data(good,bad):
   data_records = data.to_dict(orient="records")
   print(type(data_records))
   
-  for record in data_records:
-    for k, v in record.items():
-      if isinstance(v, float) and pd.isna(v):
-        record[k] = None
+  cleaned_records = []
+  for row in data_records:
+    cleaned_row = {
+        key: (None if pd.isna(value) else value)
+        for key, value in row.items()
+    }
+    cleaned_records.append(cleaned_row)
   
   
 
@@ -118,10 +133,16 @@ def transform_data(good,bad):
   
   print("Data Transformed")
   
+  print(cleaned_records)
+  print(type(cleaned_records))
+  
+  
+  
+  
   #Test 
   #File used for testing 
   
-  return data_records
+  return cleaned_records
   
 #@taksk(name="Main_Clean")  
 def main():

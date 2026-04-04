@@ -21,6 +21,7 @@ load_dotenv()
 
 async def load_data_to_db(records):  
   
+  
   db_url = os.getenv("DATABASE_URL").strip()
   #Engine
   engine = create_async_engine(db_url,echo=False)#echo=True)
@@ -36,7 +37,7 @@ async def load_data_to_db(records):
     "crypto_markets",
     meta_obj,
 
-    Column("id", Integer, primary_key=True, autoincrement=True),
+    Column("id", String, primary_key=True,),
     Column("symbol", String(50), unique=True, nullable=False),
     Column("name", String(255), nullable=False),
 
