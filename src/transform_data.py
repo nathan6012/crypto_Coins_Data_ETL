@@ -126,7 +126,7 @@ def transform_data(good,bad):
   
   print("Data Transformed")
   
-  print(len(cleaned_records)
+  print(len(cleaned_records))
   print(type(cleaned_records))
   
   
