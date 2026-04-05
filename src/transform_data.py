@@ -1,10 +1,14 @@
 import pandas as pd
 import json 
 from pandas import json_normalize
+import logging 
 
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+logging.getLogger().setLevel(logging.INFO)
+
 
 
 
@@ -110,7 +114,7 @@ def transform_data(good,bad):
   
   
   data_records = data.to_dict(orient="records")
-  print(type(data_records))
+  logging.info(type(data_records))
   
   cleaned_records = []
   for row in data_records:
@@ -126,8 +130,8 @@ def transform_data(good,bad):
   
   print("Data Transformed")
   
-  print(len(cleaned_records))
-  print(type(cleaned_records))
+  logging.info(len(cleaned_records))
+ # print(type(cleaned_records))
   
   
   

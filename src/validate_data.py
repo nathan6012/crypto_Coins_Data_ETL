@@ -4,12 +4,13 @@ from models import CryptoCoins
 from prefect import task,get_run_logger 
 from pathlib import Path
 import json
+import logging 
 
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-
+logging.getLogger().setLevel(logging.INFO)
   
 def validate(data,Model):
   valid_fields = []
@@ -32,7 +33,7 @@ def validate(data,Model):
       
       
   if valid_fields:
-    print("Good data",len(valid_fields))
+    logging.info("Good data",len(valid_fields))
     
     dir_url = Path(__file__).resolve().parent
     root_dir = dir_url.parent
@@ -43,11 +44,11 @@ def validate(data,Model):
     with open(file_1,"w") as f:
       json.dump(valid_fields,f,indent=1)
   else:
-    print("Bad Data only")
+    logging.info("Bad Data only")
 
 
   if invalid_fields:
-    print("Bad data",len(invalid_fields))
+    logging.info("Bad data",len(invalid_fields))
     
     dir_url = Path(__file__).resolve().parent
     root_dir = dir_url.parent
@@ -58,8 +59,8 @@ def validate(data,Model):
     with open(file,"w") as f:
       json.dump(invalid_fields,f,indent=1)
   else:
-    print("Clean Data Only ")
-  print("Data validated")
+    logging.info("Clean Data Only ")
+  logging.info("Data validated")
   
   
   

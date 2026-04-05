@@ -2,7 +2,12 @@ import json
 from pathlib import Path
 import sys
 import os
+import logging 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+
+
+logging.getLogger().setLevel(logging.INFO)
 
 
 
@@ -18,7 +23,7 @@ def save_raw_data(data):
   
   with open(data_path/"raw_data.json","w") as file:
     json.dump(data,file,indent=3)
-    print("Raw api data saved")
+    logging.info("Raw api data saved")
     
   
 def main():
