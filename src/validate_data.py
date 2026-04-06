@@ -33,7 +33,8 @@ def validate(data,Model):
       
       
   if valid_fields:
-    logging.info("Good data",len(valid_fields))
+    logging.info("Good data")
+    print(len(valid_fields))
     
     dir_url = Path(__file__).resolve().parent
     root_dir = dir_url.parent
@@ -48,7 +49,8 @@ def validate(data,Model):
 
 
   if invalid_fields:
-    logging.info("Bad data",len(invalid_fields))
+    logging.info("Bad data")
+    print(len(invalid_fields))
     
     dir_url = Path(__file__).resolve().parent
     root_dir = dir_url.parent
@@ -60,6 +62,8 @@ def validate(data,Model):
       json.dump(invalid_fields,f,indent=1)
   else:
     logging.info("Clean Data Only ")
+    
+    
   logging.info("Data validated")
   
   

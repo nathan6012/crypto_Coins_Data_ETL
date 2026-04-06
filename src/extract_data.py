@@ -41,7 +41,7 @@ async def extract_api_data():
 # Run main
 async def main():
   data = await extract_api_data()
-  logging.info(len(data))
+  print(len(data))
   logging.info("API Data Extracted")
   
 if __name__ == "__main__":

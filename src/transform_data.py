@@ -16,7 +16,10 @@ logging.getLogger().setLevel(logging.INFO)
 def transform_data(good,bad):
  
   df = pd.json_normalize(good)
+  print(len(df))
+  
   df1 = pd.json_normalize(bad)
+  print(len(df1))
 
   #This is the valid data
   #display settings
@@ -114,7 +117,7 @@ def transform_data(good,bad):
   
   
   data_records = data.to_dict(orient="records")
-  logging.info(type(data_records))
+  print(type(data_records))
   
   cleaned_records = []
   for row in data_records:
@@ -128,9 +131,9 @@ def transform_data(good,bad):
 
  # print(data.columns)
   
-  print("Data Transformed")
+  print(len(cleaned_records))
   
-  logging.info(len(cleaned_records))
+  logging.info("Data Transformed")
  # print(type(cleaned_records))
   
   
