@@ -105,7 +105,7 @@ def transform_data(good,bad):
       
   str_cols = ["id", "symbol", "name", "roi_currency"] 
   for col in str_cols:
-    if col in df.columns:
+    if col in data.columns:
       data[col] = data[col].astype(str).replace("nan", None)
   
  # data = data.where(data.notnull(data), None)

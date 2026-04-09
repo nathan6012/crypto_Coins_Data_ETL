@@ -84,3 +84,6 @@ It can also be triggered locally for development and testing:
 with some changes on the flow in man.py 
 then 
 python -m src.main
+
+Commit → Prefect Flow Trigger → Extract → Validate → Transform → Save Raw → Load to PostgreSQL
+Or runs on Cron schedule automatically
