@@ -31,7 +31,10 @@ def validate(data,Model):
         "errors":e.errors()
       })
       
-      
+  
+  
+  
+  #Not necessary     
   if valid_fields:
     logging.info("Good data")
     print(len(valid_fields))
@@ -63,11 +66,10 @@ def validate(data,Model):
   else:
     logging.info("Clean Data Only ")
     
-    
+  
+  
+  #Must Return/yield for the next task   
   logging.info("Data validated")
-  
-  
-  
   return  valid_fields,invalid_fields
   
 

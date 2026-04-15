@@ -4,10 +4,13 @@
 ![SQLAlchemy](https://img.shields.io/badge/Database-SQLAlchemy-red)
 ![Neon PostgreSQL](https://img.shields.io/badge/Storage-Neon%20PostgreSQL-00E599?logo=postgresql&logoColor=white)
 
-
 # Crypto Market ETL Pipeline
 
-A modular ETL pipeline that fetches cryptocurrency market data from the **CoinGecko API**, validates and transforms it, then loads it into a local **SQLite** database that can be qeried.
+## Description
+
+This project is a modular ETL pipeline that extracts cryptocurrency market data from the CoinGecko API, validates and transforms it, and loads it into a cloud-hosted PostgreSQL database (Neon) and Observer state with prefect UI Dashboard 
+
+The pipeline is designed to simplify data access and enable fast, reliable analysis of market trends. By centralizing and structuring raw API data, it allows analytics teams to focus on reporting and insights rather than data preparation.
 
 Built with **Python**, **Prefect**, **Pandas**, **Pydantic**, **HTTPX**, and **SQLAlchemy**.
 
@@ -24,14 +27,13 @@ This project follows a standard ETL workflow:
 5. **Load** the final data into Neon PostgresSql using SQLAlchemy core 
 6. **Orchestrate** and automate the workflow with Prefect and Github Actions 
 
-The goal of this project is to practice building a structured, production-style data pipeline rather than a one-off script.
 
 ---
 
 ## Tech Stack
 
 - **Python**
-- **Prefect** – orchestration and scheduling
+- **Prefect** – orchestration 
 - **Pandas** – transformation and cleaning
 - **Pydantic** – schema validation
 - **HTTPX** – API requests
@@ -72,18 +74,40 @@ project/
 └── README.md
 
 ## How to Use
-After setting up the project, run the pipeline to fetch the latest cryptocurrency market data from CoinGecko.
 
+collect Credentials for Prefect,Slack notifcations ,api key and NeonPostgresSql database url
+
+# run in IDE cli/terminal
+setup venv: activate it 
+copy teh repo  from github 
+git clone https://github.com/nathan6012/crypto_Coins_Data_ETL.git
+
+
+#prefect setup in linux
+
+to use prefect cloud must have api key ,workpool and api url ready and active 
+
+export PREFECT_API_KEY="your_api_key_here"
+export PREFECT_API_URL="https://prefect.cloud"
+then run : prefect config view 
+
+#windows  setup after login in cloud 
+# Set your API Key
+[System.Environment]::SetEnvironmentVariable("PREFECT_API_KEY", "your_api_key_here", "User")
+
+# Set your API URL
+[System.Environment]::SetEnvironmentVariable("PREFECT_API_URL", "https://prefect.cloud", "User")
+
+
+
+add the database and api add them to .env file , run the pipeline:
+  python main.py in root folder 
+cryptocurrency market data from CoinGeck
 ## Execution
 
-This pipeline is designed to run automatically through **Prefect Github Actions **.
+This pipeline is designed to run automatically through **Prefect Github Actions and Observer on prefect cloud UI or github action logs  **.
 
-It can also be triggered locally for development and testing:
 
-```bash
-with some changes on the flow in man.py 
-then 
-python -m src.main
-
-Commit → Prefect Flow Trigger → Extract → Validate → Transform → Save Raw → Load to PostgreSQL
-Or runs on Cron schedule automatically
+Note: to run in github actions add Slack webhook url to /Env .secrets
+## Future Improvements cloud S3/
+Tests 

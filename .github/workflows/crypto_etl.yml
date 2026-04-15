@@ -1,10 +1,11 @@
-name: crypto ETL pipeline
+name: Crypto ETL Pipeline
 on:
   push:
     branches:
       - main
   workflow_dispatch:
   schedule:
+    # Runs every 2 days at 05:00 UTC
     - cron: "0 5 */2 * *"
 jobs:
   run-etl:
@@ -12,9 +13,15 @@ jobs:
     environment: Env
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      
       PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/src
+      
       API_KEY: ${{ secrets.API_KEY }}
+      
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      
+      PREFECT_API_KEY: ${{ secrets.PREFECT_API_KEY }}
+      PREFECT_API_URL: ${{ secrets.PREFECT_API_URL }}
 
     steps:
       - name: Checkout repository
@@ -44,18 +51,20 @@ jobs:
         if: success()
         uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_WEBHOOK : ${{ secrets.SLACK_WEB_HOOK_URL }}
-          
-          SLACK_MESSAGE: "Crypto ETL workflow completed successfully!"
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_TITLE: "ETL Success: Database Sync"
+          SLACK_COLOR: "good"
+          SLACK_MESSAGE: "The workflow finished successfully! ✅\nView Logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
-          
-      - name: Slack Notification failure
-        if: failure() 
+      - name: Slack Notification Failure
+        if: failure()
         uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEB_HOOK_URL }}
-          SLACK_MESSAGE: "Crypto Etl Workflow failed"
-          
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_TITLE: "ETL Failure: Database Sync"
+          SLACK_COLOR: "danger"
+          SLACK_MESSAGE: "The workflow failed. ❌ Please check the logs to fix the error.\nView Logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"  
+
           
  
         
