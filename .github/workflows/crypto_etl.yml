@@ -13,16 +13,11 @@ jobs:
     environment: Env
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-      
       PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/src
-      
       API_KEY: ${{ secrets.API_KEY }}
-      
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      
       PREFECT_API_KEY: ${{ secrets.PREFECT_API_KEY }}
       PREFECT_API_URL: ${{ secrets.PREFECT_API_URL }}
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
