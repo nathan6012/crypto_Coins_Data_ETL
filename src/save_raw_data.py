@@ -22,7 +22,7 @@ def save_raw_data(data):
   sub_folder.mkdir(parents=True, exist_ok=True)
 
   
-  ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+  ts = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
   
   file_locate  = f"raw_data_{ts}.json"
   
