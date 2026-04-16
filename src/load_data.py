@@ -1,3 +1,9 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+
+
 from datetime import datetime
 from sqlalchemy.ext.asyncio import create_async_engine
 import asyncio
@@ -11,9 +17,6 @@ from sqlalchemy import(Table,Column,Integer,String,MetaData,ForeignKey,Index)
 from sqlalchemy import DateTime
 
 from dotenv import load_dotenv
-import sys
-import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 load_dotenv()
 
@@ -124,22 +127,6 @@ async def load_data_to_db(records):
         } )
     await conn.execute(stmt)
  
-      
-  #with engine.connect() as conn:
-  #  stmt = (select(crypto_markets.c.name))
-   # query = conn.execute(stmt)
-  #  for row in query:
-    #  print(row)
-      
- # with engine.connect() as conn:
-  #  stmt = (select(crypto_markets.c.id))
-   # query = conn.execute(stmt)
-  #  for row in query:
-   #   print(row)  
-    
-    
-    
-
 #All this is tes
 async def main():
   await load_data_to_db()

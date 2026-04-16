@@ -1,3 +1,9 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+
+
 from pydantic import BaseModel,ValidationError
 from models import CryptoCoins
 
@@ -6,9 +12,6 @@ from pathlib import Path
 import json
 import logging 
 
-import sys
-import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 logging.getLogger().setLevel(logging.INFO)
   
@@ -34,7 +37,8 @@ def validate(data,Model):
   
   
   
-  #Not necessary     
+  #Not necessary  
+  #Just to see the state of data 
   if valid_fields:
     logging.info("Good data")
     print(len(valid_fields))
