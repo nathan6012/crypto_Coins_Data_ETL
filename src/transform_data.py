@@ -145,11 +145,7 @@ def transform_data(good,bad):
   return cleaned_records
   
 #@taksk(name="Main_Clean")  
-def main():
-  clean = transform_data()
 
-if __name__=="__main__":
-  main()
   
   
   

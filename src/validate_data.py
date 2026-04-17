@@ -78,11 +78,6 @@ def validate(data,Model):
   
 
 
-def main():
 
-  good,bad = validate()
-  
-if __name__ == "__main__":
-  main()
   
   

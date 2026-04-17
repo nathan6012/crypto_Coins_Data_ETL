@@ -33,10 +33,5 @@ def save_raw_data(data):
     logging.info(f"Raw api data saved")
     
   
-def main():
-  save_raw_data()
-  
-if __name__=="__main__":
-  main()
-  
+
   
