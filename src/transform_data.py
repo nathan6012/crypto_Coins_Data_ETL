@@ -1,4 +1,4 @@
- import pandas as pd
+import pandas as pd
 import logging
 import sys
 import os
@@ -125,7 +125,7 @@ def transform_data(good, bad):
   str_cols = ["id", "symbol", "name", "roi_currency"]
 
   data = cast_numeric(data, float_cols, int_cols)
-    data = cast_strings(data, str_cols)
+  data = cast_strings(data, str_cols)
 
     # -----------------------------
     # FINAL OUTPUT
