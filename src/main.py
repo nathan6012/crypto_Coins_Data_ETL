@@ -1,3 +1,10 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+
+
+
 from prefect import flow, task,get_run_logger
 import asyncio
 
@@ -8,10 +15,6 @@ from extract_data import extract_api_data
 from save_raw_data import save_raw_data
 from models import CryptoCoins
 
-
-import sys
-import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
 
