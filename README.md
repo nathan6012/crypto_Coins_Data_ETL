@@ -6,27 +6,37 @@
 
 # Crypto Market ETL Pipeline
 
-## Description
-
-This project is a modular ETL pipeline that extracts cryptocurrency market data from the CoinGecko API, validates and transforms it, and loads it into a cloud-hosted PostgreSQL database (Neon) and Observer state with prefect UI Dashboard 
-
-The pipeline is designed to simplify data access and enable fast, reliable analysis of market trends. By centralizing and structuring raw API data, it allows analytics teams to focus on reporting and insights rather than data preparation.
-
-Built with **Python**, **Prefect**, **Pandas**, **Pydantic**, **HTTPX**, and **SQLAlchemy**.
-
----
-
-## Overview
-
+##📊 Overview
 This project follows a standard ETL workflow:
+Extract crypto market data from CoinGecko
+Save raw API responses locally (data lake layer)
+Validate incoming records using Pydantic
+Transform and clean dataset using Pandas
+Load structured data into Neon PostgreSQL using SQLAlchemy Core
+Track state for incremental loading (avoid duplicate processing)
+Orchestrate and automate the workflow using Prefect
+CI/CD integration via GitHub Actions for reliability
 
-1. **Extract** crypto market data from CoinGecko
-2. **Save** raw API responses locally
-3. **Validate** incoming records using Pydantic
-4. **Transform** and clean the dataset with Pandas
-5. **Load** the final data into Neon PostgresSql using SQLAlchemy core 
-6. **Orchestrate** and automate the workflow with Prefect and Github Actions 
+##💼 Business Solution
 
+This ETL pipeline solves a real-world data engineering problem: turning raw, inconsistent API data into reliable, structured, and query-ready financial datasets.
+📉 Problem
+Crypto market data from APIs like CoinGecko is:
+Unstructured and nested
+Frequently updated (high volatility)
+Difficult to query directly for analytics
+Prone to duplicates and inconsistent formats
+This creates challenges for:
+Data analysts
+Trading dashboards
+Financial reporting systems
+Machine learning pipelines
+##summery 
+📊 Real-time analytics readiness for crypto market trends
+📉 Reduced data redundancy through incremental ETL
+⚡ Faster decision-making for traders and analysts
+🧠 Reliable data foundation for forecasting models
+☁️ Scalable cloud-based data storage (Neon PostgreSQL)
 
 ---
 
@@ -34,6 +44,7 @@ This project follows a standard ETL workflow:
 
 - **Python**
 - **Prefect** – orchestration 
+- ** R2(s3)** -  Datalake 
 - **Pandas** – transformation and cleaning
 - **Pydantic** – schema validation
 - **HTTPX** – API requests
@@ -81,7 +92,9 @@ collect Credentials for Prefect,Slack notifcations ,api key and NeonPostgresSql 
 setup venv: activate it 
 copy teh repo  from github 
 git clone https://github.com/nathan6012/crypto_Coins_Data_ETL.git
-
+set all needed credentials 
+cd to root -+folder 
+run python src/main.py 
 
 #prefect setup in linux
 
