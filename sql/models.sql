@@ -1,3 +1,4 @@
+-- # OLAP Schemas 
 CREATE TABLE dim_crypto_asset (
     id VARCHAR PRIMARY KEY,
     symbol VARCHAR(50) UNIQUE NOT NULL,

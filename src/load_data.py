@@ -2,140 +2,166 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-
-
-from datetime import datetime
-from sqlalchemy.ext.asyncio import create_async_engine
 import asyncio
+from datetime import datetime
 
-from sqlalchemy import text,select,update 
-#from sqlalchemy import inspect 
-from sqlalchemy import Text,Float
-from sqlalchemy.dialects.postgresql import insert
-from sqlalchemy import UniqueConstraint 
-from sqlalchemy import(Table,Column,Integer,String,MetaData,ForeignKey,Index)
-from sqlalchemy import DateTime
+from sqlalchemy.ext.asyncio import create_async_engine
+from sqlalchemy import (
+    text, select, update,
+    Text, Float, DateTime,
+    Table, Column, Integer, String,
+    MetaData, Index
+)
 
+from sqlalchemy.dialects.postgresql import insert as pg_insert
 from dotenv import load_dotenv
+from src.system_manager import setup_logger
+
+
+logging, log_file = setup_logger()
 
 load_dotenv()
 
+# ======================
+# DATABASE / META (GLOBAL SCOPE FIX)
+# ======================
 
+db_url = os.getenv("DATABASE_URL").strip()
+engine = create_async_engine(db_url, echo=False)
+meta_obj = MetaData()
 
-async def load_data_to_db(records):  
-  
-  
-  db_url = os.getenv("DATABASE_URL").strip()
-  #Engine
-  engine = create_async_engine(db_url,echo=False)#echo=True)
-  #MetaData 
-  meta_obj = MetaData()
+etl_state = Table(
+    "etl_state",
+    meta_obj,
+    Column("pipeline_name", String, primary_key=True),
+    Column("last_seen", DateTime),
+)
 
-  
-#  inspector = inspect(engine)
-  #tables = inspector.get_table_names()
-  
-  #insert to update on conflict 
-  crypto_markets = Table(
+crypto_markets = Table(
     "crypto_markets",
     meta_obj,
 
-    Column("id", String, primary_key=True,),
+    Column("id", String, primary_key=True),
     Column("symbol", String(50), unique=True, nullable=False),
     Column("name", String(255), nullable=False),
 
-    Column("current_price", Float, nullable=True),
-    Column("market_cap", Float, nullable=True),
-    Column("market_cap_rank", Integer, nullable=True),
-    Column("fully_diluted_valuation", Float, nullable=True),
-    Column("total_volume", Float, nullable=True),
+    Column("current_price", Float),
+    Column("market_cap", Float),
+    Column("market_cap_rank", Integer),
+    Column("fully_diluted_valuation", Float),
+    Column("total_volume", Float),
 
-    Column("high_24h", Float, nullable=True),
-    Column("low_24h", Float, nullable=True),
-    Column("price_change_24h", Float, nullable=True),
-    Column("price_change_percentage_24h", Float, nullable=True),
+    Column("high_24h", Float),
+    Column("low_24h", Float),
+    Column("price_change_24h", Float),
+    Column("price_change_percentage_24h", Float),
 
-    Column("market_cap_change_24h", Float, nullable=True),
-    Column("market_cap_change_percentage_24h", Float, nullable=True),
-    Column("circulating_supply", Float, nullable=True),
-    Column("total_supply", Float, nullable=True),
-    Column("max_supply", Float, nullable=True),
+    Column("market_cap_change_24h", Float),
+    Column("market_cap_change_percentage_24h", Float),
+    Column("circulating_supply", Float),
+    Column("total_supply", Float),
+    Column("max_supply", Float),
 
-    Column("ath", Float, nullable=True),
-    Column("ath_change_percentage", Float, nullable=True),
-    Column("ath_date", DateTime, nullable=True),
-    Column("atl", Float, nullable=True),
-    Column("atl_change_percentage", Float, nullable=True),
-    Column("atl_date", DateTime, nullable=True),
+    Column("ath", Float),
+    Column("ath_change_percentage", Float),
+    Column("ath_date", DateTime),
+    Column("atl", Float),
+    Column("atl_change_percentage", Float),
+    Column("atl_date", DateTime),
 
-    Column("roi", Text, nullable=True),
-    Column("last_updated", DateTime, nullable=True),
-    Column("roi_times", Float, nullable=True),
-    Column("roi_currency", String(50), nullable=True),
-    Column("roi_percentage", Float, nullable=True),
+    Column("roi", Text),
+    Column("roi_times", Float),
+    Column("roi_currency", String(50)),
+    Column("roi_percentage", Float),
+
+    Column("last_updated", DateTime),
 )
-  
-  #Faster Query   
-  Index("ix_crypto_markets_symbol", crypto_markets.c.symbol)
-  
-  
-  
-  #Create The tables # Meta_obj must be closed
-  # to avoid Db creation Erorrs 
- # ____________________________
+
+Index("ix_crypto_markets_symbol", crypto_markets.c.symbol)
+
+
+# ======================
+# HELPERS
+# ======================
+
+async def get_last_seen(conn):
+    result = await conn.execute(
+        select(etl_state.c.last_seen).where(
+            etl_state.c.pipeline_name == "users_pipeline"
+        )
+    )
+    row = result.fetchone()
+    return row[0] if row else None
+
+
+async def get_new_rows(conn, last_seen):
+    query = select(crypto_markets)
+
+    if last_seen:
+        query = query.where(crypto_markets.c.last_updated > last_seen)
+
+    result = await conn.execute(query)
+    return [dict(r._mapping) for r in result.fetchall()]
+
+
+async def update_last_seen(conn, rows):
+    if not rows:
+        return
+
+    latest = max(r["last_updated"] for r in rows)
+
+    stmt = pg_insert(etl_state).values(
+        pipeline_name="users_pipeline",
+        last_seen=latest
+    ).on_conflict_do_update(
+        index_elements=["pipeline_name"],
+        set_={"last_seen": latest}
+    )
+
+    await conn.execute(stmt)
+
+
+
+
+
+
+
+
+# ======================
+# MAIN ETL FLOW
+# ======================
+
+async def run_incremental(records):
   async with engine.begin() as conn:
     await conn.run_sync(meta_obj.create_all)
-    
-  
-  
-  
-  
-#Our insert /Update everytime   
-  
-  async with engine.begin() as conn:
-    stmt = insert(crypto_markets).values(records)
-    stmt = stmt.on_conflict_do_update(
-      index_elements=["symbol"],
-      set_={
-            "name": stmt.excluded.name,
-        "current_price": stmt.excluded.current_price,
-        "market_cap": stmt.excluded.market_cap,
-        "market_cap_rank": stmt.excluded.market_cap_rank,
-        "fully_diluted_valuation": stmt.excluded.fully_diluted_valuation,
-        "total_volume": stmt.excluded.total_volume,
-        "high_24h": stmt.excluded.high_24h,
-        "low_24h": stmt.excluded.low_24h,
-        "price_change_24h": stmt.excluded.price_change_24h,
-        "price_change_percentage_24h": stmt.excluded.price_change_percentage_24h,
-        "market_cap_change_24h": stmt.excluded.market_cap_change_24h,
-        "market_cap_change_percentage_24h": stmt.excluded.market_cap_change_percentage_24h,
-        "circulating_supply": stmt.excluded.circulating_supply,
-        "total_supply": stmt.excluded.total_supply,
-        "max_supply": stmt.excluded.max_supply,
-        "ath": stmt.excluded.ath,
-        "ath_change_percentage": stmt.excluded.ath_change_percentage,
-        "ath_date": stmt.excluded.ath_date,
-        "atl": stmt.excluded.atl,
-        "atl_change_percentage": stmt.excluded.atl_change_percentage,
-        "atl_date": stmt.excluded.atl_date,
-        "roi": stmt.excluded.roi,
-        "last_updated": stmt.excluded.last_updated,
-        "roi_times": stmt.excluded.roi_times,
-        "roi_currency": stmt.excluded.roi_currency,
-        "roi_percentage": stmt.excluded.roi_percentage,
 
-        } )
-    await conn.execute(stmt)
- 
-#All this is tes
-async def main():
-  await load_data_to_db()
-  print("Loaded To Your DataBase")
+    last_seen = await get_last_seen(conn)
 
-if __name__ == "__main__":
-  asyncio.run(main())
-  
-  
-  
-  
-  
+        # 3. filter incoming data (optional but useful)
+    if last_seen:
+      records = [
+        r for r in records
+        if r.get("last_updated") and r["last_updated"] > last_seen
+            ]
+
+        # 4. upsert data
+    if records:
+      stmt = pg_insert(crypto_markets).values(records)
+
+      stmt = stmt.on_conflict_do_update(
+        index_elements=["symbol"],
+        set_={col.name: getattr(stmt.excluded, col.name)
+        for col in crypto_markets.c 
+        if col.name != "id"})
+      await conn.execute(stmt)
+
+        # 5. update checkpoint
+    await update_last_seen(conn, records)
+    logging.info("Data Updated/Staged")
+
+
+# ======================
+# ENTRY POINT
+# ======================
+
+#asyncio.run(run_incremental(records))

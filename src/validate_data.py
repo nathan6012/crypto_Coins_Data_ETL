@@ -3,7 +3,6 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
-
 from pydantic import BaseModel,ValidationError
 from models import CryptoCoins
 

@@ -1,11 +1,13 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 from pydantic import BaseModel, AnyUrl, ConfigDict, field_validator
 from typing import Optional
 from decimal import Decimal
 from datetime import datetime
 
-import sys
-import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+# Using Strict Validation only Needed fields 
 
 
 

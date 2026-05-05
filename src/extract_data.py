@@ -1,3 +1,7 @@
+import sys
+import os 
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 import asyncio # used 
 import httpx # used
 import logging 
@@ -5,13 +9,15 @@ import os # used
 from dotenv import load_dotenv #used
 from aiolimiter import AsyncLimiter # used 
 #use = Used in the algorithm 
-import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+from src.system_manager import setup_logger
+logging, log_file = setup_logger()
+
 
 #___________________
 load_dotenv() # Locate the .env 
 # gets the api key from .env 
-logging.getLogger().setLevel(logging.INFO)
+#logging.getLogger().setLevel(logging.INFO)
 
 
 
@@ -32,23 +38,8 @@ async def extract_api_data():
       response.raise_for_status()
       data = response.json()
 
-    
-    
     return data 
 
-
-
-# Run main
-async def main():
-  data = await extract_api_data()
-  print(len(data))
-  logging.info("API Data Extracted")
-  
-if __name__ == "__main__":
- # print("Data collected")
-  asyncio.run(main())
-#The Extract
-  
   
   
   

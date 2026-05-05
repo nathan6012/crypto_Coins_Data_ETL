@@ -5,6 +5,7 @@ httpx
 aiolimiter
 python-dotenv
 pytest
+boto3
 pytest-asyncio
 respx
 python-dotenv
