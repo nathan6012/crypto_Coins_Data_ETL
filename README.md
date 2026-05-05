@@ -2,6 +2,7 @@
 ![Prefect](https://img.shields.io/badge/Orchestration-Prefect-06b6d4)
 ![Pandas](https://img.shields.io/badge/Data-Pandas-black)
 ![SQLAlchemy](https://img.shields.io/badge/Database-SQLAlchemy-red)
+![Cloudflare R2](https://img.shields.io/badge/Storage-Cloudflare%20R2-F38020?logo=cloudflare&logoColor=white)
 ![Neon PostgreSQL](https://img.shields.io/badge/Storage-Neon%20PostgreSQL-00E599?logo=postgresql&logoColor=white)
 
 # Crypto Market ETL Pipeline
