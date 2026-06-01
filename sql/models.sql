@@ -10,12 +10,14 @@ CREATE TABLE fact_crypto_market_snapshot (
     snapshot_id VARCHAR PRIMARY KEY,
     coin_id VARCHAR NOT NULL,
     last_updated TIMESTAMP NOT NULL,
+    
     current_price DOUBLE PRECISION,
     high_24h DOUBLE PRECISION,
     low_24h DOUBLE PRECISION,
     price_change_24h DOUBLE PRECISION,
     price_change_percentage_24h DOUBLE PRECISION,
     market_cap DOUBLE PRECISION,
+    
     market_cap_rank INTEGER,
     market_cap_change_24h DOUBLE PRECISION,
     market_cap_change_percentage_24h DOUBLE PRECISION,
