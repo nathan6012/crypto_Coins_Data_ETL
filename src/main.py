@@ -17,7 +17,7 @@ from src.save_raw_data import save_raw_data
 from src.models import CryptoCoins
 
 
-from src.system_manager import setup_logger
+from shared.system_manager import setup_logger
 logging, log_file = setup_logger()
 
 

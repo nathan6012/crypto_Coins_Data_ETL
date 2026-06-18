@@ -5,10 +5,12 @@ httpx
 aiolimiter
 python-dotenv
 pytest
+pyarrow
 boto3
 pytest-asyncio
 respx
 python-dotenv
 prefect==3.6.24
 asyncpg>=0.29.0
-psycopg2-binary>=2.9.9
+psycopg
+
