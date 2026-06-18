@@ -5,26 +5,32 @@ import pandas as pd
 from sqlalchemy import text
 
 
+
 def get_market_data(conn):
+
     result = conn.execute(
         text("""
-        SELECT
-    name,
-    market_cap,
-    price_change_percentage_24h
-FROM crypto_markets
+        SELECT 
+            name,
+            symbol,
+            market_cap,
+            price_change_percentage_24h,
+            current_price,
+            total_volume
+        FROM crypto_markets
+        ORDER BY market_cap DESC
+        LIMIT 50;
         """)
     )
 
     return result.fetchall()
     
-    
 
 def get_crypto_details(conn):
 
-    result =  conn.execute(
+    result = conn.execute(
         text("""
-        SELECT
+        SELECT 
             name,
             symbol,
             current_price,
@@ -34,7 +40,7 @@ def get_crypto_details(conn):
             total_volume
         FROM crypto_markets
         ORDER BY market_cap DESC
-        LIMIT 5
+        LIMIT 10;
         """)
     )
 

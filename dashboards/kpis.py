@@ -7,7 +7,7 @@ def total_coins(conn):
 
     result =  conn.execute(
         text("""
-        SELECT COUNT(*)
+        SELECT DISTINCT COUNT(*)
         FROM crypto_markets
         """)
     )
@@ -44,12 +44,15 @@ def top_coin(conn):
 
     result = conn.execute(
         text("""
-        SELECT name, market_cap
-        FROM crypto_markets
-        ORDER BY market_cap DESC
-        LIMIT 1
-        """)
-    )
+SELECT 
+    name,
+    symbol,
+    current_price
+FROM crypto_markets
+ORDER BY current_price DESC
+LIMIT 1;
+
+""" ))
 
     row = result.fetchone()
 
@@ -68,10 +71,12 @@ def top_gainer(conn):
 
     result = conn.execute(
         text("""
-        SELECT name, price_change_percentage_24h
-        FROM crypto_markets
-        ORDER BY price_change_percentage_24h DESC
-        LIMIT 1
+SELECT 
+    name,
+    price_change_percentage_24h
+FROM crypto_markets
+ORDER BY price_change_percentage_24h DESC
+LIMIT 1;
         """)
     )
 
@@ -91,10 +96,12 @@ def top_loser(conn):
 
     result = conn.execute(
         text("""
-        SELECT name, price_change_percentage_24h
-        FROM crypto_markets
-        ORDER BY price_change_percentage_24h ASC
-        LIMIT 1
+SELECT 
+    name,
+    price_change_percentage_24h
+FROM crypto_markets
+ORDER BY price_change_percentage_24h ASC
+LIMIT 1;
         """)
     )
 

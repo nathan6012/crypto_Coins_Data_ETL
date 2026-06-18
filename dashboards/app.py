@@ -85,14 +85,15 @@ with col2:
         )
 
 with col3:
-    st.subheader("")
+    st.subheader("Gainer")
     st.write("")
     if kpis["top_gainer"]:
         st.success(
             f"🚀 {kpis['top_gainer']['name']} "
             f"(+{kpis['top_gainer']['change']}%)"
         )
-
+    st.subheader("loser")
+    st.write("")
     if kpis["top_loser"]:
         st.error(
             f"📉 {kpis['top_loser']['name']} "
@@ -158,25 +159,57 @@ details = load_details()
 st.divider()
 st.subheader("📋 Crypto Market Details TOP 5 Coins performance")
 
-df = pd.DataFrame(
-    details,
-    columns=[
-        "name",
-        "symbol",
-        "price",
-        "market_cap",
-        "rank",
-        "24h_change",
-        "volume"
-    ]
-)
 
+
+
+
+# DATAFRAME BUILD (FIXED COLUMN MATCH)
+# ======================
+df = pd.DataFrame(details, columns=[
+    "name",
+    "symbol",
+    "current_price",
+    "market_cap",
+    "market_cap_rank",
+    "price_change_percentage_24h",
+    "total_volume"
+])
+
+# ======================
+# CLEAN COLUMN NAMES
+# ======================
+df = df.rename(columns={
+    "price_change_percentage_24h": "change_24h"
+})
+
+# ======================
+# NUMERIC SAFETY
+# ======================
+numeric_cols = [
+    "current_price",
+    "market_cap",
+    "change_24h",
+    "total_volume"
+]
+
+for col in numeric_cols:
+    df[col] = pd.to_numeric(df[col], errors="coerce")
+
+# ======================
+# SORT BY MARKET CAP
+# ======================
 df = df.sort_values("market_cap", ascending=False)
 
-df["price"] = df["price"].round(4)
+# ======================
+# ROUNDING
+# ======================
+df["current_price"] = df["current_price"].round(4)
 df["market_cap"] = df["market_cap"].round(2)
-df["24h_change"] = df["24h_change"].round(2)
+df["change_24h"] = df["change_24h"].round(2)
 
+# ======================
+# STREAMLIT UI
+# ======================
 for _, row in df.iterrows():
     col1, col2, col3, col4 = st.columns(4)
 
@@ -184,15 +217,17 @@ for _, row in df.iterrows():
         st.write(f"**{row['name']} ({row['symbol']})**")
 
     with col2:
-        st.write(f"💰 {row['price']}")
+        st.write(f"💰 {row['current_price']}")
 
     with col3:
         st.write(f"📊 {row['market_cap']}")
 
     with col4:
-        change = float(row["24h_change"])
+        change = row["change_24h"]
 
-        if change > 0:
+        if pd.isna(change):
+            st.write("N/A")
+        elif change > 0:
             st.success(f"📈 {change}%")
         else:
             st.error(f"📉 {change}%")
