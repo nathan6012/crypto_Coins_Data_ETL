@@ -10,7 +10,8 @@ from dotenv import load_dotenv #used
 from aiolimiter import AsyncLimiter # used 
 #use = Used in the algorithm 
 
-from src.system_manager import setup_logger
+from shared.system_manager import setup_logger
+
 logging, log_file = setup_logger()
 
 

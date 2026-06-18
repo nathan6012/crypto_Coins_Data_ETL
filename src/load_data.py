@@ -7,7 +7,7 @@ from datetime import datetime
 
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy import (
-    text, select, update,
+    select,
     Text, Float, DateTime,
     Table, Column, Integer, String,
     MetaData, Index
@@ -15,21 +15,28 @@ from sqlalchemy import (
 
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 from dotenv import load_dotenv
-from src.system_manager import setup_logger
+from shared.system_manager import setup_logger
 
-
+# ======================
+# LOGGING
+# ======================
 logging, log_file = setup_logger()
 
 load_dotenv()
 
 # ======================
-# DATABASE / META (GLOBAL SCOPE FIX)
+# DATABASE
 # ======================
-
 db_url = os.getenv("DATABASE_URL").strip()
 engine = create_async_engine(db_url, echo=False)
+
 meta_obj = MetaData()
 
+PIPELINE_NAME = "crypto_markets_pipeline"
+
+# ======================
+# TABLES
+# ======================
 etl_state = Table(
     "etl_state",
     meta_obj,
@@ -79,7 +86,6 @@ crypto_markets = Table(
 
 Index("ix_crypto_markets_symbol", crypto_markets.c.symbol)
 
-
 # ======================
 # HELPERS
 # ======================
@@ -87,31 +93,21 @@ Index("ix_crypto_markets_symbol", crypto_markets.c.symbol)
 async def get_last_seen(conn):
     result = await conn.execute(
         select(etl_state.c.last_seen).where(
-            etl_state.c.pipeline_name == "users_pipeline"
+            etl_state.c.pipeline_name == PIPELINE_NAME
         )
     )
     row = result.fetchone()
     return row[0] if row else None
 
 
-async def get_new_rows(conn, last_seen):
-    query = select(crypto_markets)
-
-    if last_seen:
-        query = query.where(crypto_markets.c.last_updated > last_seen)
-
-    result = await conn.execute(query)
-    return [dict(r._mapping) for r in result.fetchall()]
-
-
 async def update_last_seen(conn, rows):
     if not rows:
         return
 
-    latest = max(r["last_updated"] for r in rows)
+    latest = max(r["last_updated"] for r in rows if r.get("last_updated"))
 
     stmt = pg_insert(etl_state).values(
-        pipeline_name="users_pipeline",
+        pipeline_name=PIPELINE_NAME,
         last_seen=latest
     ).on_conflict_do_update(
         index_elements=["pipeline_name"],
@@ -121,47 +117,75 @@ async def update_last_seen(conn, rows):
     await conn.execute(stmt)
 
 
-
-
-
-
-
-
 # ======================
 # MAIN ETL FLOW
 # ======================
 
 async def run_incremental(records):
-  async with engine.begin() as conn:
-    await conn.run_sync(meta_obj.create_all)
+    async with engine.begin() as conn:
 
-    last_seen = await get_last_seen(conn)
+        # Create tables if not exist
+        await conn.run_sync(meta_obj.create_all)
 
-        # 3. filter incoming data (optional but useful)
-    if last_seen:
-      records = [
-        r for r in records
-        if r.get("last_updated") and r["last_updated"] > last_seen
+        # Get checkpoint
+        last_seen = await get_last_seen(conn)
+
+        # Optional filter (safe optimization, NOT required)
+        if last_seen:
+            records = [
+                r for r in records
+                if r.get("last_updated") and r["last_updated"] > last_seen
             ]
 
-        # 4. upsert data
-    if records:
-      stmt = pg_insert(crypto_markets).values(records)
+        # ======================
+        # UPSERT (CORE FIX)
+        # ======================
+        if records:
 
-      stmt = stmt.on_conflict_do_update(
-        index_elements=["symbol"],
-        set_={col.name: getattr(stmt.excluded, col.name)
-        for col in crypto_markets.c 
-        if col.name != "id"})
-      await conn.execute(stmt)
+            stmt = pg_insert(crypto_markets).values(records)
 
-        # 5. update checkpoint
-    await update_last_seen(conn, records)
-    logging.info("Data Updated/Staged")
+            stmt = stmt.on_conflict_do_update(
+                index_elements=["id"],  # ✅ FIXED (PRIMARY KEY)
+                set_={
+                    "symbol": stmt.excluded.symbol,
+                    "name": stmt.excluded.name,
+                    "current_price": stmt.excluded.current_price,
+                    "market_cap": stmt.excluded.market_cap,
+                    "market_cap_rank": stmt.excluded.market_cap_rank,
+                    "fully_diluted_valuation": stmt.excluded.fully_diluted_valuation,
+                    "total_volume": stmt.excluded.total_volume,
 
+                    "high_24h": stmt.excluded.high_24h,
+                    "low_24h": stmt.excluded.low_24h,
+                    "price_change_24h": stmt.excluded.price_change_24h,
+                    "price_change_percentage_24h": stmt.excluded.price_change_percentage_24h,
 
-# ======================
-# ENTRY POINT
-# ======================
+                    "market_cap_change_24h": stmt.excluded.market_cap_change_24h,
+                    "market_cap_change_percentage_24h": stmt.excluded.market_cap_change_percentage_24h,
 
-#asyncio.run(run_incremental(records))
+                    "circulating_supply": stmt.excluded.circulating_supply,
+                    "total_supply": stmt.excluded.total_supply,
+                    "max_supply": stmt.excluded.max_supply,
+
+                    "ath": stmt.excluded.ath,
+                    "ath_change_percentage": stmt.excluded.ath_change_percentage,
+                    "ath_date": stmt.excluded.ath_date,
+                    "atl": stmt.excluded.atl,
+                    "atl_change_percentage": stmt.excluded.atl_change_percentage,
+                    "atl_date": stmt.excluded.atl_date,
+
+                    "roi": stmt.excluded.roi,
+                    "roi_times": stmt.excluded.roi_times,
+                    "roi_currency": stmt.excluded.roi_currency,
+                    "roi_percentage": stmt.excluded.roi_percentage,
+
+                    "last_updated": stmt.excluded.last_updated,
+                }
+            )
+
+            await conn.execute(stmt)
+
+        # Update checkpoint
+        await update_last_seen(conn, records)
+
+        logging.info("Crypto markets ETL completed successfully")
