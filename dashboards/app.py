@@ -39,6 +39,11 @@ engine = create_engine(db_url, echo=False)
 def get_conn():
     return engine.connect()
 
+
+
+
+
+
 # -----------------------------
 # PAGE CONFIG
 # -----------------------------
@@ -48,7 +53,7 @@ st.set_page_config(
 )
 
 st.title("Crypto ETL Analytics Dashboard")
-st.write("Crypto Coins Data growth over time ()")
+st.write("This Analytics Dashboard shows Crypto Coins Data growth  and down growth over time (focing on the top 5 and 10 Coins )")
 
 # -----------------------------
 # KPI SECTION

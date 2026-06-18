@@ -16,6 +16,7 @@ jobs:
       PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/src
       API_KEY: ${{ secrets.API_KEY }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      DATABASE_URL_2: ${{ secrets.DATABASE_URL_2 }}
       PREFECT_API_KEY: ${{ secrets.PREFECT_API_KEY }}
       PREFECT_API_URL: ${{ secrets.PREFECT_API_URL }}
       #Datalake R2(S3)
