@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: dashboards/Dockerfile
+    container_name: dashboards
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/data
+      - ./local_data:/local_data
+    depends_on:
+      - src
+
+  src:
+    build:
+      context: .
+      dockerfile: src/Dockerfile
+    container_name: etl_pipeline
+    volumes:
+      - ./data:/data
+      - ./local_data:/local_data
+    environment:
+      - PYTHONUNBUFFERED=1
+
+networks:
+  default:
+    driver: bridge
