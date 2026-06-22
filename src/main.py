@@ -10,12 +10,12 @@ import asyncio
 
 import logging 
 from src.transform import transform_data
-from src.load_data import run_incremental
+from src.load_data import run_full_load
 from src.validate_data import validate
 from src.extract_data import extract_api_data
 from src.save_raw_data import save_raw_data
 from src.models import CryptoCoins
-
+from src.data_quality import data_quality_check
 from shared.system_manager import setup_logger
 
 logging, log_file = setup_logger()
@@ -51,13 +51,20 @@ def transform_task(good, bad):
   logging.info("Runing Data Transformation")
   
   return transform_data(good, bad)
+  
+@task(name="Quality check")
+def data_quality_check_task(data):
+  logging.info("Runing Data Quality Check")
+  
+  return data_quality_check(data)
+  
 
 @task(retries=3, log_prints=True)
 async def load_task(clean):
   #logger = get_run_logger()
   logging.info("Runing Data Loading to Database")
   
-  await run_incremental(clean)
+  await run_full_load(clean)
 
 
 # Main flow 
@@ -76,11 +83,13 @@ async def master_flow_etl():
 
     # Step 4: Transform
     clean = transform_task(good, bad)
+    
+    data_quality_check_task(clean)
 
     # Step 5: Load
     logging.info("Staging to Database")
     
-    await run_incremental(clean)
+    await run_full_load(clean)
     
     logging.info("Data Pipeline Run Successfully")
   else:

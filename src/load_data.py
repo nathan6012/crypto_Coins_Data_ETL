@@ -1,9 +1,10 @@
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
 import asyncio
-from datetime import datetime
+
+sys.path.append(
+    os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+)
 
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy import (
@@ -32,18 +33,9 @@ engine = create_async_engine(db_url, echo=False)
 
 meta_obj = MetaData()
 
-PIPELINE_NAME = "crypto_markets_pipeline"
-
 # ======================
 # TABLES
 # ======================
-etl_state = Table(
-    "etl_state",
-    meta_obj,
-    Column("pipeline_name", String, primary_key=True),
-    Column("last_seen", DateTime),
-)
-
 crypto_markets = Table(
     "crypto_markets",
     meta_obj,
@@ -65,6 +57,7 @@ crypto_markets = Table(
 
     Column("market_cap_change_24h", Float),
     Column("market_cap_change_percentage_24h", Float),
+
     Column("circulating_supply", Float),
     Column("total_supply", Float),
     Column("max_supply", Float),
@@ -87,65 +80,23 @@ crypto_markets = Table(
 Index("ix_crypto_markets_symbol", crypto_markets.c.symbol)
 
 # ======================
-# HELPERS
+# MAIN ETL FLOW (FULL LOAD)
 # ======================
-
-async def get_last_seen(conn):
-    result = await conn.execute(
-        select(etl_state.c.last_seen).where(
-            etl_state.c.pipeline_name == PIPELINE_NAME
-        )
-    )
-    row = result.fetchone()
-    return row[0] if row else None
-
-
-async def update_last_seen(conn, rows):
-    if not rows:
-        return
-
-    latest = max(r["last_updated"] for r in rows if r.get("last_updated"))
-
-    stmt = pg_insert(etl_state).values(
-        pipeline_name=PIPELINE_NAME,
-        last_seen=latest
-    ).on_conflict_do_update(
-        index_elements=["pipeline_name"],
-        set_={"last_seen": latest}
-    )
-
-    await conn.execute(stmt)
-
-
-# ======================
-# MAIN ETL FLOW
-# ======================
-
-async def run_incremental(records):
+async def run_full_load(records):
     async with engine.begin() as conn:
 
-        # Create tables if not exist
+        # Create table if not exists
         await conn.run_sync(meta_obj.create_all)
 
-        # Get checkpoint
-        last_seen = await get_last_seen(conn)
-
-        # Optional filter (safe optimization, NOT required)
-        if last_seen:
-            records = [
-                r for r in records
-                if r.get("last_updated") and r["last_updated"] > last_seen
-            ]
-
         # ======================
-        # UPSERT (CORE FIX)
+        # UPSERT ALL DATA
         # ======================
         if records:
 
             stmt = pg_insert(crypto_markets).values(records)
 
             stmt = stmt.on_conflict_do_update(
-                index_elements=["id"],  # ✅ FIXED (PRIMARY KEY)
+                index_elements=["id"],
                 set_={
                     "symbol": stmt.excluded.symbol,
                     "name": stmt.excluded.name,
@@ -185,7 +136,4 @@ async def run_incremental(records):
 
             await conn.execute(stmt)
 
-        # Update checkpoint
-        await update_last_seen(conn, records)
-
-        logging.info("Crypto markets ETL completed successfully")
+        logging.info("Crypto markets FULL LOAD ETL completed successfully")

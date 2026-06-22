@@ -38,39 +38,23 @@ def validate(data,Model):
   
   #Not necessary  
   #Just to see the state of data 
-  if valid_fields:
-    logging.info("Good data")
-    print(len(valid_fields))
+ # if valid_fields:
+  #  logging.info("Good data")
+ #   print(len(valid_fields))
     
-    dir_url = Path(__file__).resolve().parent
-    root_dir = dir_url.parent
-    sub_folder = root_dir/"data"
+ #   dir_url = Path(__file__).resolve().parent
+ #   root_dir = dir_url.parent
+  #  sub_folder = root_dir/"data"
   
-    file_1 = sub_folder/"valid.json"
+   # file_1 = sub_folder/"valid.json"
     
-    with open(file_1,"w") as f:
-      json.dump(valid_fields,f,indent=1)
-  else:
-    logging.info("Bad Data only")
+ #   with open(file_1,"w") as f:
+ #     json.dump(valid_fields,f,indent=1)
+#  else:
+  #  logging.info("Bad Data only")
 
 
-  if invalid_fields:
-    logging.info("Bad data")
-    print(len(invalid_fields))
-    
-    dir_url = Path(__file__).resolve().parent
-    root_dir = dir_url.parent
-    sub_folder = root_dir/"data"
-    
-    file = sub_folder/"invalid.json"
-    
-    with open(file,"w") as f:
-      json.dump(invalid_fields,f,indent=1)
-  else:
-    logging.info("Clean Data Only ")
-    
-  
-  
+
   #Must Return/yield for the next task   
   logging.info("Data validated")
   return  valid_fields,invalid_fields
