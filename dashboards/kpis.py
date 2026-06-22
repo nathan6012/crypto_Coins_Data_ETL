@@ -7,7 +7,7 @@ def total_coins(conn):
 
     result =  conn.execute(
         text("""
-        SELECT DISTINCT COUNT(*)
+        SELECT DISTINCT COUNT(symbol)
         FROM crypto_markets
         """)
     )

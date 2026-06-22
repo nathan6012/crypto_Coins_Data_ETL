@@ -2,59 +2,66 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-
 import pandas as pd
 import logging
 
 logging.getLogger().setLevel(logging.INFO)
+
 # -----------------------------
 # HELPERS
 # -----------------------------
 def convert_dates(df, date_cols):
-  for col in date_cols:
-    if col in df.columns:
-      df[col] = (
+    for col in date_cols:
+        if col in df.columns:
+            df[col] = (
                 pd.to_datetime(df[col], errors="coerce", utc=True)
                 .dt.tz_localize(None)
             )
-  return df
+    return df
 
 
 def rename_roi_columns(df):
-  return df.rename(columns={
+    return df.rename(columns={
         "data.roi.currency": "roi_currency",
         "data.roi.times": "roi_times",
         "data.roi.percentage": "roi_percentage"
     })
 
 
-def cast_numeric(df, float_cols, int_cols):
-  for col in float_cols:
-    if col in df.columns:
-      df[col] = pd.to_numeric(df[col], errors="coerce")
+def fill_numeric_nans(df, float_cols, int_cols):
+    for col in float_cols:
+        if col in df.columns:
+            df[col] = pd.to_numeric(df[col], errors="coerce").fillna(0)
 
-  for col in int_cols:
-    if col in df.columns:
-      df[col] = pd.to_numeric(df[col], errors="coerce", downcast="integer")
+    for col in int_cols:
+        if col in df.columns:
+            df[col] = (
+                pd.to_numeric(df[col], errors="coerce")
+                .fillna(0)
+                .astype(int)
+            )
 
-  return df
+    return df
 
 
 def cast_strings(df, str_cols):
-  for col in str_cols:
-    if col in df.columns:
-      df[col] = df[col].astype(str).replace("nan", None)
-  return df
+    for col in str_cols:
+        if col in df.columns:
+            df[col] = df[col].astype(str).replace("nan", None)
+    return df
 
 
+# -----------------------------
+# CLEAN NULLS (optional)
+# -----------------------------
 def clean_nulls(records):
-  cleaned = []
-  for row in records:
-    cleaned.append({
+    cleaned = []
+    for row in records:
+        cleaned.append({
             key: (None if pd.isna(value) else value)
             for key, value in row.items()
         })
-  return cleaned
+    return cleaned
 
 
 # -----------------------------
@@ -62,39 +69,42 @@ def clean_nulls(records):
 # -----------------------------
 def transform_data(good, bad):
 
-  df = pd.json_normalize(good)
-  df1 = pd.json_normalize(bad)
+    df = pd.json_normalize(good)
+    df1 = pd.json_normalize(bad)
 
-  print(len(df))
-  print(len(df1))
+    logging.info(f"Good records: {len(df)}")
+    logging.info(f"Bad records: {len(df1)}")
 
-  pd.set_option("display.max_columns", None)
-  pd.set_option("display.max_rows", None)
+    pd.set_option("display.max_columns", None)
+    pd.set_option("display.max_rows", None)
 
-  date_cols = [
+    # -----------------------------
+    # DATE COLUMNS
+    # -----------------------------
+    date_cols = [
         "data.ath_date",
         "data.atl_date",
         "data.last_updated"
     ]
 
-    # -----------------------------
-    # CLEAN BOTH DATAFRAMES
-    # -----------------------------
-  df = convert_dates(df, date_cols)
-  df1 = convert_dates(df1, date_cols)
+    df = convert_dates(df, date_cols)
+    df1 = convert_dates(df1, date_cols)
 
-  df = rename_roi_columns(df)
-  df1 = rename_roi_columns(df1)
+    # -----------------------------
+    # ROI CLEANUP
+    # -----------------------------
+    df = rename_roi_columns(df)
+    df1 = rename_roi_columns(df1)
 
-  if "errors" in df1.columns:
-    df1 = df1.drop(columns=["errors"])
+    if "errors" in df1.columns:
+        df1 = df1.drop(columns=["errors"])
 
     # -----------------------------
     # COMBINE
     # -----------------------------
-  combined = pd.concat([df, df1])
+    combined = pd.concat([df, df1])
 
-  data = (
+    data = (
         combined
         .set_index("idx")
         .sort_index()
@@ -103,15 +113,15 @@ def transform_data(good, bad):
     )
 
     # -----------------------------
-    # DROP / RENAME
+    # DROP / CLEAN COLUMNS
     # -----------------------------
-  data = data.drop(columns=["idx", "data.image"], errors="ignore")
-  data.columns = data.columns.str.replace("data.", "", regex=False)
+    data = data.drop(columns=["idx", "data.image"], errors="ignore")
+    data.columns = data.columns.str.replace("data.", "", regex=False)
 
     # -----------------------------
-    # TYPE CASTING
+    # TYPE DEFINITIONS
     # -----------------------------
-  float_cols = [
+    float_cols = [
         "current_price", "total_volume", "high_24h", "low_24h",
         "price_change_24h", "price_change_percentage_24h",
         "market_cap_change_24h", "market_cap_change_percentage_24h",
@@ -120,36 +130,33 @@ def transform_data(good, bad):
         "roi_times", "roi_percentage"
     ]
 
-  int_cols = ["market_cap", "market_cap_rank", "fully_diluted_valuation"]
+    int_cols = [
+        "market_cap",
+        "market_cap_rank",
+        "fully_diluted_valuation"
+    ]
 
-  str_cols = ["id", "symbol", "name", "roi_currency"]
+    str_cols = [
+        "id", "symbol", "name", "roi_currency"
+    ]
 
-  data = cast_numeric(data, float_cols, int_cols)
-  data = cast_strings(data, str_cols)
+    # -----------------------------
+    # FIX NaN PROPERLY
+    # -----------------------------
+    data = fill_numeric_nans(data, float_cols, int_cols)
+    data = cast_strings(data, str_cols)
 
     # -----------------------------
     # FINAL OUTPUT
     # -----------------------------
-  data_records = data.to_dict(orient="records")
-  print(type(data_records))
+    data_records = data.to_dict(orient="records")
 
-  cleaned_records = clean_nulls(data_records)
+    cleaned_records = clean_nulls(data_records)
 
+    logging.info(f"Final cleaned records: {len(cleaned_records)}")
+    logging.info("Data Transformed Successfully")
 
-
- # print(data.columns)
-  
-  print(len(cleaned_records))
-  
-  logging.info("Data Transformed")
- # print(type(cleaned_records))
-
-  
-  return cleaned_records
-  
-#@taksk(name="Main_Clean")  
-
-  
+    return cleaned_records
   
   
   
