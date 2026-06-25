@@ -1,106 +1,140 @@
+import os
 import sys
-import os 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+sys.path.append(
+    os.path.abspath(
+        os.path.join(os.path.dirname(__file__), "..")
+    )
+)
 
 import pytest
-from unittest.mock import AsyncMock, MagicMock
-from src.load_data import run_incremental  
+from unittest.mock import AsyncMock, MagicMock, patch
 
-import pytest
-from datetime import datetime, timedelta
-from datetime import datetime, timezone
+from src.load_data import run_full_load
 
 
+# =========================
+# FIXTURE
+# =========================
 
 @pytest.fixture
 def sample_records():
-  now = datetime.now(timezone.utc)
 
-  return [
+    return [
         {
+            "id": "btc",
             "symbol": "BTC",
             "name": "Bitcoin",
-            "last_updated": now,
             "current_price": 50000,
+            "market_cap": 1000000000,
+            "last_updated": None,
         },
         {
+            "id": "eth",
             "symbol": "ETH",
             "name": "Ethereum",
-            "last_updated": now + timedelta(minutes=1),
             "current_price": 3000,
+            "market_cap": 500000000,
+            "last_updated": None,
         },
     ]
 
 
-@pytest.fixture
-def old_last_seen():
-  return datetime.now(timezone.utc) - timedelta(days=1)
-
-
-@pytest.fixture
-def recent_last_seen():
-  return datetime.now(timezone.utc) + timedelta(days=1)
-
-
 # =========================
-# TESTS
-# =========================
-
-def test_filter_new_rows(sample_records, old_last_seen):
-  """Should return all records if last_seen is old"""
-
-  filtered = [
-        r for r in sample_records
-        if r["last_updated"] > old_last_seen
-    ]
-
-  assert len(filtered) == 2
-
-
-def test_filter_no_new_rows(sample_records, recent_last_seen):
-  """Should return empty if last_seen is newer than data"""
-
-  filtered = [
-        r for r in sample_records
-        if r["last_updated"] > recent_last_seen
-    ]
-
-  assert len(filtered) == 0
-
-
-def test_last_seen_computation(sample_records):
-  """Should compute max last_updated correctly"""
-
-  latest = max(r["last_updated"] for r in sample_records)
-
-  assert latest == sample_records[1]["last_updated"]
-
-
-# =========================
-# MOCK BEHAVIOR TEST (ETL LOGIC)
+# SUCCESS LOAD TEST
 # =========================
 
 @pytest.mark.asyncio
-async def test_incremental_flow_logic(sample_records):
-  """
-    Tests core ETL decision logic WITHOUT DB.
+@patch("src.load_data.engine")
+async def test_full_load_success(
+    mock_engine,
+    sample_records
+):
+    """
+    Should create tables and insert records
     """
 
-  last_seen = None
+    mock_conn = AsyncMock()
 
-    # simulate first run
-  new_rows = sample_records if not last_seen else [
-        r for r in sample_records if r["last_updated"] > last_seen
-    ]
+    mock_context = AsyncMock()
 
-  assert len(new_rows) == 2
+    mock_context.__aenter__.return_value = mock_conn
 
-    # update checkpoint
-  last_seen = max(r["last_updated"] for r in new_rows)
 
-    # simulate second run with same data
-  new_rows_2 = [
-        r for r in sample_records if r["last_updated"] > last_seen
-    ]
+    mock_engine.begin.return_value = mock_context
 
-  assert len(new_rows_2) == 0
+
+    await run_full_load(sample_records)
+
+
+    # create_all called
+    mock_conn.run_sync.assert_called_once()
+
+
+    # insert executed
+    mock_conn.execute.assert_called_once()
+
+
+
+# =========================
+# EMPTY DATA TEST
+# =========================
+
+@pytest.mark.asyncio
+@patch("src.load_data.engine")
+async def test_full_load_empty(
+    mock_engine
+):
+    """
+    Should not insert when records are empty
+    """
+
+    mock_conn = AsyncMock()
+
+    mock_context = AsyncMock()
+
+    mock_context.__aenter__.return_value = mock_conn
+
+
+    mock_engine.begin.return_value = mock_context
+
+
+    await run_full_load([])
+
+
+    mock_conn.execute.assert_not_called()
+
+
+
+# =========================
+# DATABASE FAILURE TEST
+# =========================
+
+@pytest.mark.asyncio
+@patch("src.load_data.engine")
+async def test_full_load_database_failure(
+    mock_engine,
+    sample_records
+):
+    """
+    Should raise error when database fails
+    """
+
+    mock_conn = AsyncMock()
+
+    mock_conn.execute.side_effect = Exception(
+        "Database error"
+    )
+
+
+    mock_context = AsyncMock()
+
+    mock_context.__aenter__.return_value = mock_conn
+
+
+    mock_engine.begin.return_value = mock_context
+
+
+    with pytest.raises(Exception):
+
+        await run_full_load(sample_records)

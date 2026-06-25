@@ -1,42 +1,45 @@
-import sys
-import os 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
 from pathlib import Path
-import logging 
+import logging
 
 
-def setup_logger(name: str = "etl_pipeline", log_dir: str = "data"):
-  """Creates a logger that writes logs into /data folder."""
+def setup_logger(name: str = "etl_pipeline", log_dir: str = "local_data"):
+    """
+    Creates a reusable ETL logger with file + console output.
+    """
 
-    # Ensure /data folder exists
-  log_path = Path(log_dir)
-  log_path.mkdir(parents=True, exist_ok=True)
+    # -----------------------------
+    # Create log directory
+    # -----------------------------
+    root_dir = Path(__file__).resolve().parent.parent
+    log_path = root_dir / log_dir
+    log_path.mkdir(parents=True, exist_ok=True)
 
-    # Log file inside data/
-  log_file = log_path / f"{name}.log"
+    log_file = log_path / f"{name}.log"
 
-  logger = logging.getLogger(name)
-  logger.setLevel(logging.INFO)
+    # -----------------------------
+    # Logger setup
+    # -----------------------------
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.INFO)
+    logger.propagate = False  # avoid duplicate logs
 
-    # Avoid duplicate handlers (important in ETL runs / Prefect)
-  if not logger.handlers:
-        # File handler
-    file_handler = logging.FileHandler(log_file)
-    file_handler.setLevel(logging.INFO)
+    # Prevent duplicate handlers
+    if not logger.handlers:
 
-        # Format
-    formatter = logging.Formatter(
+        formatter = logging.Formatter(
             "%(asctime)s | %(levelname)s | %(name)s | %(message)s"
         )
-    file_handler.setFormatter(formatter)
+
+        # File handler
+        file_handler = logging.FileHandler(log_file)
+        file_handler.setLevel(logging.INFO)
+        file_handler.setFormatter(formatter)
 
         # Console handler
-    console_handler = logging.StreamHandler()
-    console_handler.setFormatter(formatter)
+        console_handler = logging.StreamHandler()
+        console_handler.setFormatter(formatter)
 
-        # Attach handlers
-    logger.addHandler(file_handler)
-    logger.addHandler(console_handler)
+        logger.addHandler(file_handler)
+        logger.addHandler(console_handler)
 
-  return logger, str(log_file)
+    return logger, str(log_file)
